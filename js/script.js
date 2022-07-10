@@ -13,6 +13,17 @@ const listadoMateriaPrima = [];
 const listadoProducto = [];
 const listadoPrecios = [];
 
+let menuSecundarioMateriaPrima = document.getElementById('addMateriaPrima');
+let menuSecundarioProducto = document.getElementById('addProducto');
+
+let cerrarFormularioMateriaPrima = document.getElementById('cerrarFormularioMp');
+let cerrarFormularioProducto = document.getElementById('cerrarFormularioProducto');
+
+let formularioMateriaPrima = document.getElementById('formMateriaPrima');
+let formularioProducto = document.getElementById('formProducto');
+
+let addIngrediente = document.getElementById('addIngrediente');
+
 
 class MateriaPrima {
     constructor(materiaPrima, cantidadEmpaque, costo) {
@@ -65,14 +76,14 @@ validarOpcionContinuar = (opcion, mensaje) => {
     }
 }
 
-nombresMateriaPrima = (array) => {
-    let nombre = "";
-    let i = 1;
-    for (const item of array) {
-        nombre = `${nombre} ${i} - ${item.materiaPrima}.\n`;
-        i++;
+nombresMateriaPrima = () => {
+    let seleccion = document.getElementById("selectIngredientes");
+    let opcion = document.createElement('option');
+    for (const item of listadoMateriaPrima) {
+        opcion.setAttribute("value", item.materiaPrima);
+        opcion.text = item.materiaPrima;
+        seleccion.appendChild(opcion);
     }
-    return nombre;
 }
 
 const existe = materiaPrimaExistente = (array, elemento, opcion) => {
@@ -96,83 +107,63 @@ const costoPorIngrediente = (producto) => {
 const constructorTablas = (array, contenedor, tipo) => {
     switch (tipo) {
         case 'materiaPrima':
-            let tableM = document.createElement('table');
-            let theadM = document.createElement('thead');
-            let tbodyM = document.createElement('tbody');
-            tableM.appendChild(theadM);
-            tableM.appendChild(tbodyM);
-            tableM.className = 'table';
-            document.getElementById(contenedor).appendChild(tableM);
+            let tbodyM = document.getElementById('tbMateriales');
 
-            let tituloM = document.createElement('tr');
-            let tM1 = document.createElement('th');
-            let tM2 = document.createElement('th');
-            let tM3 = document.createElement('th');
+            let rowM = document.createElement('tr');
+            let colM1 = document.createElement('td');
+            colM1.innerHTML = array.materiaPrima;
+            let colM2 = document.createElement('td');
+            colM2.innerHTML = array.cantidadEmpaque;
+            let colM3 = document.createElement('td');
+            colM3.innerHTML = array.costo;
 
-            tM1.innerHTML = 'Materia Prima';
-            tM2.innerHTML = 'Cant. Empaque';
-            tM3.innerHTML = 'Costo';
+            rowM.appendChild(colM1);
+            rowM.appendChild(colM2);
+            rowM.appendChild(colM3);
+            tbodyM.appendChild(rowM);
 
-            tituloM.appendChild(tM1);
-            tituloM.appendChild(tM2);
-            tituloM.appendChild(tM3);
-            theadM.appendChild(tituloM);
-
-            for (const elemento of array) {
-                let rowM = document.createElement('tr');
-                let colM1 = document.createElement('td');
-                colM1.innerHTML = elemento.materiaPrima;
-                let colM2 = document.createElement('td');
-                colM2.innerHTML = elemento.cantidadEmpaque;
-                let colM3 = document.createElement('td');
-                colM3.innerHTML = elemento.costo;
-
-                rowM.appendChild(colM1);
-                rowM.appendChild(colM2);
-                rowM.appendChild(colM3);
-                tbodyM.appendChild(rowM);
-            }
             break;
 
         case 'producto':
-            for (const elemento of listadoProducto) {
-                let producto = document.createElement('h3');
-                producto.innerHTML = elemento.nomProducto;
-                document.getElementById(contenedor).append(producto);
+            for(const elemento of array){
+            let producto = document.createElement('h3');
 
-                let tableP = document.createElement('table');
-                let theadP = document.createElement('thead');
-                let tbodyP = document.createElement('tbody');
+            producto.innerHTML = elemento.nomProducto;
+            document.getElementById(contenedor).append(producto);
 
-                tableP.appendChild(theadP);
-                tableP.appendChild(tbodyP);
-                tableP.className = 'table';
+            let tableP = document.createElement('table');
+            let theadP = document.createElement('thead');
+            let tbodyP = document.createElement('tbody');
 
-                document.getElementById(contenedor).appendChild(tableP);
+            tableP.appendChild(theadP);
+            tableP.appendChild(tbodyP);
+            tableP.className = 'table';
 
-                let tituloP = document.createElement('tr');
-                let tP1 = document.createElement('th');
-                let tP2 = document.createElement('th');
+            document.getElementById(contenedor).appendChild(tableP);
 
-                tP1.innerHTML = 'Materia Prima';
-                tP2.innerHTML = 'Cantidad';
+            let tituloP = document.createElement('tr');
+            let tP1 = document.createElement('th');
+            let tP2 = document.createElement('th');
 
-                tituloP.appendChild(tP1);
-                tituloP.appendChild(tP2);
-                theadP.appendChild(tituloP);
+            tP1.innerHTML = 'Materia Prima';
+            tP2.innerHTML = 'Cantidad';
 
-                for (const valorElemento of elemento.ingredientes) {
-                    let rowP = document.createElement('tr');
-                    let colP1 = document.createElement('td');
-                    let colP2 = document.createElement('td');
+            tituloP.appendChild(tP1);
+            tituloP.appendChild(tP2);
+            theadP.appendChild(tituloP);
+            console.log(elemento);
+            for (const valorElemento of elemento.ingredientes) {
+                let rowP = document.createElement('tr');
+                let colP1 = document.createElement('td');
+                let colP2 = document.createElement('td');
 
-                    colP1.innerHTML = valorElemento.ingrediente.materiaPrima;
-                    colP2.innerHTML = valorElemento.cantidad;
-                    rowP.appendChild(colP1);
-                    rowP.appendChild(colP2);
-                    tbodyP.appendChild(rowP);
-                }
+                colP1.innerHTML = valorElemento.ingrediente.materiaPrima;
+                colP2.innerHTML = valorElemento.cantidad;
+                rowP.appendChild(colP1);
+                rowP.appendChild(colP2);
+                tbodyP.appendChild(rowP);
             }
+        }
             break;
         case 'precios':
             let table = document.createElement('table');
@@ -193,7 +184,7 @@ const constructorTablas = (array, contenedor, tipo) => {
             titulo.appendChild(t1);
             titulo.appendChild(t2);
             thead.appendChild(titulo);
-
+            
             for (const producto of array) {
                 let venta = costoPorIngrediente(producto);
                 let row = document.createElement('tr');
@@ -212,116 +203,98 @@ const constructorTablas = (array, contenedor, tipo) => {
     }
 }
 
-// INICIO DE SIMULADOR
-while (salir) {
-    alert("···· SIMULADOR DE COSTOS ····")
-    let opcion = prompt("···· SIMULADOR DE COSTOS ····\n1. Ingresar Materia Prima. \n2. Ingreso de producto a preparar. \n3. Calculo de costos.\n0. Visualizar datos.");
-
-    switch (opcion) {
-        case "1":
-            while (nuevoIngrediente) {
-                let nomMateriaPrima = prompt("Indique la materia prima:");
-                mensaje = "ERROR: INGRESE SOLO TEXTO.\nIndique la materia prima:"
-                let nomMateriaPrimaValido = validarTexto(nomMateriaPrima.toUpperCase(), mensaje);
-                if (!existe(listadoMateriaPrima, nomMateriaPrimaValido, true)) {
-                    let cantidadEmpaque = parseInt(validarNumeros(prompt(`Producto: ${nomMateriaPrimaValido}\nIngrese cantidad del empaque:`), "ERROR: INGRESE SOLO NUMEROS\nIngrese nuevamente la cantidad del empaque:"));
-                    let costoMateriaPrima = parseInt(validarNumeros(prompt(`Producto: ${nomMateriaPrimaValido}\nIngrese costo del empaque:`), "ERROR: INGRESE SOLO NUMEROS\nIngrese nuevamente el costo del empaque:"));
-                    listadoMateriaPrima.push(new MateriaPrima(nomMateriaPrimaValido, cantidadEmpaque, costoMateriaPrima));
-                    nuevoIngrediente = validarOpcionContinuar(prompt("¿Desea ingresar un nuevo Ingrediente?\n1 - Si.\n2 - No."), "ERROR: Opcion Incorrecta.\n¿Desea ingresar un nuevo Ingrediente?\n1 - Si.\n2 - No.");
-                    /* 
-                    for (const producto of listadoMateriaPrima) {
-                        let columna = document.createElement("td");
-                        let contenido = document.createTextNode(producto);
-                        document.querySelector("#materiales__td").columna.append(contenido);
-                    } */
-
-                } else {
-                    alert(`ERROR: YA EL PRODUCTO ${nomMateriaPrimaValido} FUE AGREGADO.\nDebe ingresar un nuevo ingrediente`);
-                }
-            }
-            nuevoIngrediente = true;
-            break;
-
-        case "2":
-            const ingredientes = [];
-
-            producto = prompt("Indique que producto desea realizar:");
-            mensaje = "ERROR: INGRESE SOLO TEXTO.\nIngrese producto:"
-            let productoValido = validarTexto(producto.toUpperCase(), mensaje);
-
-            if (listadoMateriaPrima.length < 1) {
-                alert("ERROR: NO  HAY MATERIA PRIMA.\n Debe ingresar previamente la materia prima.");
-            } else {
-                let cantidadIngredintes = listadoMateriaPrima.length;
-
-                while (seleccionado) {
-                    let seleccionIngrediente = validarNumeros(prompt(`Produto: ${productoValido}\nSeleccione el ingrediente los ingredientes autilizar:\n${nombresMateriaPrima(listadoMateriaPrima)}\n 0 - No ingresar mas ingredientes`), "ERROR: INGRESE SOLO NUMEROS\n");
-
-                    if (seleccionIngrediente == 0) {
-                        seleccionado = false;
-                    } else if (seleccionIngrediente <= cantidadIngredintes) {
-
-                        seleccionIngrediente = seleccionIngrediente - 1;
-                        for (let i = 0; i < listadoMateriaPrima.length; i++) {
-                            if (listadoMateriaPrima[seleccionIngrediente].materiaPrima == listadoMateriaPrima[i].materiaPrima) {
-                                if (!existe(ingredientes, listadoMateriaPrima[i].materiaPrima, false)) {
-                                    let cantidadIngrediente = parseInt(validarNumeros(prompt(`Producto: ${productoValido}\nIngrese cantidad a utilizar de ${listadoMateriaPrima[i].materiaPrima}:`), "ERROR: INGRESE SOLO NUMEROS\nIngrese nuevamente la cantidad a utilizar:"));
-                                    ingredientes.push({
-                                        ingrediente: listadoMateriaPrima[i],
-                                        cantidad: cantidadIngrediente
-                                    });
-                                } else {
-                                    alert("ERROR: MATERIA PRIMA YA FUE INGRESADA")
-                                }
-
-                            }
-                        }
-                        seleccionado = true;
-                    } else {
-                        alert("ERROR: OPCION INCORRECTA");
-                        seleccionado = true;
-                    }
-                }
-                listadoProducto.push(new Producto(productoValido, ingredientes));
-                seleccionado = true;
-            }
-            break;
-
-        case "3":
-            if (listadoProducto.length < 1) {
-                alert("ERROR: INGRESE UN PRODUCTO.")
-            } else {
-
-                let seleccionProducto = prompt("Indique el producto calcular el precio de venta:");
-                mensaje = "ERROR: INGRESE SOLO TEXTO.\nIngrese producto:";
-                let seleccionProductoValido = validarTexto(seleccionProducto.toUpperCase(), mensaje);
-
-                alert("Realizando el calculo del presuesto.\n Aguarde un instante");
-                if (!listadoProducto.includes(seleccionProductoValido)) {
-                    for (const producto of listadoProducto) {
-                        if (producto.nomProducto == seleccionProductoValido) {
-                            let costo = costoPorIngrediente(producto);
-                            alert(`El precio de venta del producto ${seleccionProductoValido} es: ${costo.toFixed(2)} pesos.`);
-                        } else {
-                            alert("ERROR: PRODUCTO NO INGRESADO");
-                        }
-                    }
-                } else {
-                    alert("ERROR: EL PRODUCTO INGRESADO NO SE ENCUENTRA REGISTRADO");
-                }
-            }
-            break;
-
-        case "0":
-            salir = false;
-            break;
-
-        default:
-            alert("OPCION INCORRECTA, INTENTENUEVAMENTE.");
-            break;
-    }
+mostrarFormularioMP = () => {
+    let formulario = document.getElementById("formMateriaPrima");
+    formulario.style.opacity = 1;
+    formulario.style.zIndex = 1;
 }
-alert("A CONTINUACION PODRA VISUALIZAR LOS DATOS INGRESADOS");
-constructorTablas(listadoMateriaPrima, "materiales", "materiaPrima");
-constructorTablas(listadoProducto, "productos", "producto");
-constructorTablas(listadoProducto, "listaPrecios", "precios");
+mostrarFormularioProd = () => {
+    let formulario = document.getElementById("formProducto");
+    formulario.style.opacity = 1;
+    formulario.style.zIndex = 1;
+    nombresMateriaPrima();
+}
+
+ocultarFormularioMP = () => {
+    let formulario = document.getElementById("formMateriaPrima");
+    formulario.style.opacity = 0;
+    formulario.style.zIndex = 0;
+}
+
+ocultarFormularioProd = () => {
+    let formulario = document.getElementById("formProducto");
+    formulario.style.opacity = 0;
+    formulario.style.zIndex = 0;
+}
+
+selectIngredientes = () => {
+    nombresMateriaPrima();    
+    // Solo me carga el primer select, los demas no carga los valores del la lista de materia prima
+    document.getElementById("tbIngredientes").insertRow(-1).innerHTML = `<tr>
+    <td>
+        <select class="form-select" id="selectIngredientes">
+            <option selected>Selecciona un ingrediente</option>
+        </select>
+    </td>
+    <td>
+        <input id="cantidadIngrediente" class="form-control formulario__items" type="number"
+            name="cantidadIngrediente" placeholder="Cantidad ingrediente" required>
+    </td>
+</tr>`;
+}
+
+validarFormProducto = (e) => {
+    e.preventDefault();
+    let nombreProducto = document.querySelector('#nombreProducto').value;
+    let seleccion = document.querySelector("#selectIngredientes").value;
+
+    const ingredientes = [];
+
+    /* Me devuelve -1 apesar que el elemento esta en la lista
+    let id = listadoMateriaPrima.indexOf(seleccion)
+    console.table(listadoMateriaPrima);
+    console.log(id);
+
+    coloque el primer elemento por defecto para pruebas
+ */
+    ingredientes.push({
+        ingrediente: listadoMateriaPrima[0],
+        cantidad: document.querySelector('#cantidadIngrediente').value
+    });
+
+    let producto = new Producto(nombreProducto, ingredientes)
+    listadoProducto.push(producto);
+
+    constructorTablas(listadoProducto, "productos", "producto");
+    ocultarFormularioProd();
+
+    // Listado de precios
+    constructorTablas(listadoProducto, "listaPrecios", "precios");
+}
+
+validarFormMateriaPrima = (e) => {
+    e.preventDefault();
+    let nombreMateriaPrima = document.querySelector("#nombreMateriaPrima").value;
+    if (!existe(listadoMateriaPrima, nombreMateriaPrima, true)) {
+        let cantidadEmpaque = document.querySelector("#cantidadEmpaque").value;
+        let costoEmpaque = document.querySelector("#costoEmpaque").value;
+        let materiaPrima = new MateriaPrima(nombreMateriaPrima, cantidadEmpaque, costoEmpaque)
+        listadoMateriaPrima.push(materiaPrima);
+        constructorTablas(materiaPrima, "tbMateriaPrima", "materiaPrima");
+    } else {
+        alert("PRODUCTO YA INGRESADO");
+    }
+    ocultarFormularioMP();
+}
+
+// EVENTOS
+menuSecundarioMateriaPrima.addEventListener("click", mostrarFormularioMP);
+cerrarFormularioMateriaPrima.addEventListener("click", ocultarFormularioMP);
+
+menuSecundarioProducto.addEventListener("click", mostrarFormularioProd);
+cerrarFormularioProducto.addEventListener("click", ocultarFormularioProd);
+
+formularioMateriaPrima.addEventListener("submit", validarFormMateriaPrima);
+formularioProducto.addEventListener("submit", validarFormProducto);
+
+addIngrediente.addEventListener("click", selectIngredientes);

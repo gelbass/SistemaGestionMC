@@ -7,14 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css"
+        integrity="sha512-bSncow0ApIhONbz+pNI52n0trz5fMWbgteHsonaPk42JbunIeM9ee+zTYAUP1eLPky5wP0XZ7MSLAPxKkwnlzw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/styles.css">
     <title>SIMULADOR DE COSTOS MUNDO CUPCAKE</title>
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">MUNDO CUPCAKE</a>
+                <a class="navbar-brand" href="#">
+                    <img src="./img/MC_logo1.png" alt="" class="d-inline-block align-text-center">
+                    Mundo Cupcake
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -57,24 +70,131 @@
             </div>
         </nav>
     </header>
-    <main>
-        <!-- MATERIA PRIMA -->
-        <div class="container p-4 m-2">
-            <h2>Materia Prima</h2>
-            <div class="container" id="materiales"></div>
+    <main id="main">
+        <div class="menuSecundario shadow-sm">
+            <div class="menuSecundario__items" id="addMateriaPrima">
+                <i class="fa-light fa-box-circle-check"></i>Agregar Materia Prima
+            </div>
+            <hr>
+            <div class="menuSecundario__items" id="addProducto">
+                <i class="fa-duotone fa-box-circle-check"></i>Agregar Producto
+            </div>
+            <hr>
+            <div class="menuSecundario__items" id="addVentas">
+                <i class="fa-duotone fa-box-circle-check"></i>Historial de ventas
+            </div>
         </div>
-        <br>
-        <!-- PRODUCTOS -->
-        <div class="container p-4 m-2">
-            <h2>Productos</h2>
-            <div class="container" id="productos"></div>
+        <div class="cuerpo p-4">
+            <div class="container-fluid">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <!-- MATERIA PRIMA -->
+            <div class="container p-4 gx-2 rounded shadow-sm bg-light">
+                <h2>Materia Prima</h2>
+                <div class="container">
+                    <table class="table" id="materiales">
+                        <thead>
+                            <tr>
+                                <th>Materia Prima</th>
+                                <th>Cant. Empaque</th>
+                                <th>Costo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbMateriales"></tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <!-- PRODUCTOS -->
+            <div class="container p-4 gx-2 rounded shadow-sm bg-light">
+                <h2>Productos</h2>
+                <div class="container" id="productos"></div>
+            </div>
+            <br>
+            <div class="container p-4 gx-2 rounded shadow-sm bg-light">
+                <h2>Listado de Precios</h2>
+                <div class="container" id="listaPrecios"></div>
+            </div>
         </div>
-        <div class="container p-4 m-2">
-            <h2>Listado de Precios</h2>
-            <div class="container" id="listaPrecios"></div>
+
+        <!-- FORMULARIOS MODALES - MATERIALES -->
+        <div class="container__formulario" id="formMateriaPrima">
+            <h2 class="d-flex justify-content-center">Ingreso de materia prima</h2>
+            <form class="formulario" action="">
+                <div class="form-group">
+                    <label for="nombreMateriaPrima">Materia Prima</label>
+                    <input id="nombreMateriaPrima" class="form-control formulario__items" type="text"
+                        name="materiaPrima" placeholder="Ingrese nombre de la materia prima" required>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="cantidadEmpaque">Cantidad del empaque</label>
+                            <input id="cantidadEmpaque" class="form-control formulario__items" type="number"
+                                name="cantidadEmpaque" placeholder="Cantidad del empaque" required>
+                        </div>
+                        <div class="col">
+                            <label for="costoEmpaque">Costo de la materia prima</label>
+                            <input id="costoEmpaque" class="form-control formulario__items" type="number" name="costo"
+                                placeholder="Costo de la materia prima" required>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="from-group d-flex justify-content-around">
+                    <input class="btn" type="button" value="cerrar" id="cerrarFormularioMp">
+                    <input class="btn" type="submit" value="guardar" id="guardarFormularioMp">
+                </div>
+            </form>
         </div>
+        <!-- FORMULARIOS MODALES - PRODUCTOS -->
+        <div class="container__formulario container__formulario--productos" id="formProducto">
+            <h2 class="d-flex justify-content-center">Ingreso de Productos</h2>
+            <form class="formulario" action="">
+                <div class="form-group">
+                    <label for="nombreProducto">Producto</label>
+                    <input id="nombreProducto" class="form-control formulario__items" type="text" name="nombreProducto"
+                        placeholder="Ingrese nombre del producto" required>
+                </div>
+                <div class="form-group tbIngredientes">
+                    <table class="table" id="tbIngredientes">
+                        <thead>
+                            <tr>
+                                <th>Ingrediente</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-select" id="selectIngredientes">
+                                        <option selected>Selecciona un ingrediente</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input id="cantidadIngrediente" class="form-control formulario__items" type="number"
+                                        name="cantidadIngrediente" placeholder="Cantidad ingrediente" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="from-group d-flex justify-content-around">
+                    <input class="btn" type="button" value="cerrar" id="cerrarFormularioProducto">
+                    <input class="btn" type="button" value="Nuevo Ingrediente" id="addIngrediente">
+                    <input class="btn" type="submit" value="guardar" id="guardarFormularioProducto">
+                </div>
+            </form>
+        </div>
+
+
     </main>
-    <footer></footer>
     <script src="./js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">

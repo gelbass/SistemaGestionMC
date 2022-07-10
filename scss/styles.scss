@@ -1,0 +1,87 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+hr{
+    height: 2px;
+    color: #e9e7e7;
+}
+
+main {
+    height: 100vh;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 0.3fr 1.4fr;
+    grid-template-rows: 1fr;
+    gap: 0px;
+    grid-template-areas:
+        "menuSecundario cuerpo";
+}
+
+.navbar-brand {
+    margin-right: 2rem;
+    margin-left: 10px;
+}
+
+.cuerpo {
+    background-color: #e9e7e7;
+    grid-area: cuerpo;
+}
+
+.menuSecundario {
+    background-color: #001f12;
+    grid-area: menuSecundario;
+    padding-top: 1em;
+}
+
+.menuSecundario__items {
+
+    color: #ffffff;
+    text-decoration: none;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ffffff;
+        color: #001f12;
+    }
+}
+
+.container__formulario{
+    background-color: white;
+    position: fixed;
+    top: 140px;
+    left: 470px;
+    width: 650px;
+    height: 400px;
+    border-radius: 25px;
+    padding: 28px;
+    box-shadow: 0px 2px 20px 3px black;
+    opacity: 0;
+    transition: 0.2s;
+}
+.container__formulario--productos{
+    top: 140px;
+    left: 447px;
+    width: 732px;
+    height: 470px;
+}
+.formulario{
+    padding: 20px;
+}
+.form-group{
+    padding: 14px 0px;
+}
+
+.tbIngredientes{
+    margin-top: 15px;
+    width: auto;
+    height: 170px;
+    overflow-y: auto;
+}
+.btn{
+    background-color: #8ae9b5;
+    width: 200px;
+    padding: 10px;
+    text-transform: uppercase;
+}
