@@ -118,7 +118,17 @@
             <br>
             <div class="container p-4 gx-2 rounded shadow-sm bg-light">
                 <h2>Listado de Precios</h2>
-                <div class="container" id="listaPrecios"></div>
+                <div class="container">
+                    <table class="table" id="listaPrecios">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio de Venta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbListaPrecios"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -148,39 +158,29 @@
                 <hr>
                 <div class="from-group d-flex justify-content-around">
                     <input class="btn" type="button" value="cerrar" id="cerrarFormularioMp">
-                    <input class="btn" type="submit" value="guardar" id="guardarFormularioMp">
+                    <input class="btn" type="submit" value="guardar">
                 </div>
             </form>
         </div>
         <!-- FORMULARIOS MODALES - PRODUCTOS -->
         <div class="container__formulario container__formulario--productos" id="formProducto">
             <h2 class="d-flex justify-content-center">Ingreso de Productos</h2>
-            <form class="formulario" action="">
+            <form class="formulario" action="" id="formProductos">
                 <div class="form-group">
                     <label for="nombreProducto">Producto</label>
                     <input id="nombreProducto" class="form-control formulario__items" type="text" name="nombreProducto"
                         placeholder="Ingrese nombre del producto" required>
                 </div>
                 <div class="form-group tbIngredientes">
-                    <table class="table" id="tbIngredientes">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Ingrediente</th>
                                 <th>Cantidad</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <select class="form-select" id="selectIngredientes">
-                                        <option selected>Selecciona un ingrediente</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input id="cantidadIngrediente" class="form-control formulario__items" type="number"
-                                        name="cantidadIngrediente" placeholder="Cantidad ingrediente" required>
-                                </td>
-                            </tr>
+                        <tbody id="tbIngredientes">
+
                         </tbody>
                     </table>
                 </div>
