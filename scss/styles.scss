@@ -10,7 +10,7 @@ main {
     height: 100vh;
     display: grid;
     grid-auto-columns: 1fr;
-    grid-template-columns: 0.3fr 1.4fr;
+    grid-template-columns: 0.4fr 1.3fr;
     grid-template-rows: 1fr;
     gap: 0px;
     grid-template-areas:
@@ -34,10 +34,9 @@ main {
 }
 
 .menuSecundario__items {
-
     color: #ffffff;
     text-decoration: none;
-    padding: 25px;
+    padding: 25px 0px;
     text-align: center;
     cursor: pointer;
 
@@ -51,21 +50,15 @@ main {
     display: none;
     background-color: white;
     position: fixed;
-    top: 140px;
-    left: 470px;
-    width: 650px;
-    height: 400px;
+    top: 0;
+    left: 0;
+    margin: 5% 25%;
     border-radius: 25px;
     padding: 28px;
     box-shadow: 0px 2px 20px 3px black;
     transition: 0.2s;
 }
-.container__formulario--productos{
-    top: 140px;
-    left: 447px;
-    width: 732px;
-    height: 470px;
-}
+
 .formulario{
     padding: 20px;
 }
@@ -83,5 +76,6 @@ main {
     background-color: #8ae9b5;
     width: 200px;
     padding: 10px;
+    margin: 0px 10px;
     text-transform: uppercase;
 }

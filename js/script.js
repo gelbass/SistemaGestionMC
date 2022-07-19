@@ -4,7 +4,8 @@
 
 const listadoProducto = [];
 const listadoPrecios = [];
-
+let nuevaSession;
+let listadoMateriaPrima;
 // -------------------------------
 
 // LISTADO DE INGREDIENTES BASICOS PARA EL LOCALSTORAGE
@@ -34,9 +35,6 @@ const listadoMateriaPrimaLocal = [{
         costoEmpaque: 35
     }
 ];
-const listadoMateriaPrimaJSON = JSON.stringify(listadoMateriaPrimaLocal);
-localStorage.setItem("listadoMateriaPrima", listadoMateriaPrimaJSON);
-const listadoMateriaPrima = JSON.parse(localStorage.getItem("listadoMateriaPrima"));
 // -------------------------------
 
 // BOTONES PARA EVENTOS
@@ -111,36 +109,23 @@ const costoPorIngrediente = (producto) => {
     let costoIngrediente = 0;
     const MANODEOBRA = 300;
     for (const item of producto.ingredientesProducto) {
-            costoIngrediente += (item.cantidad / item.ingrediente.cantidadEmpaque) * item.ingrediente.costoEmpaque;
-            console.log(item.cantidad);
-            console.log(item.ingrediente.cantidadEmpaque);
-            console.log(item.ingrediente.costoEmpaque);
-        };
-    return costoIngrediente + MANODEOBRA;
+        costoIngrediente += (item.cantidad / item.ingrediente.cantidadEmpaque) * item.ingrediente.costoEmpaque;
+        console.log(item.cantidad);
+        console.log(item.ingrediente.cantidadEmpaque);
+        console.log(item.ingrediente.costoEmpaque);
+    };
+    let venta = costoIngrediente + MANODEOBRA
+    listadoPrecios.push({
+        producto: producto.nomProducto,
+        precioVenta: venta
+    });
+    return venta;
 }
 
 
 // CREAR TABLAS
 const constructorTablas = (array, contenedor, tipo) => {
     switch (tipo) {
-        case 'materiaPrima':
-
-            let tbodyM = document.getElementById(contenedor);
-
-            let rowM = document.createElement('tr');
-            let colM1 = document.createElement('td');
-            colM1.innerHTML = array.materiaPrima;
-            let colM2 = document.createElement('td');
-            colM2.innerHTML = array.cantidadEmpaque;
-            let colM3 = document.createElement('td');
-            colM3.innerHTML = array.costoEmpaque;
-
-            rowM.appendChild(colM1);
-            rowM.appendChild(colM2);
-            rowM.appendChild(colM3);
-            tbodyM.appendChild(rowM);
-            break;
-
         case 'producto':
             let producto = document.createElement('h3');
             producto.innerHTML = array.nomProducto;
@@ -181,19 +166,22 @@ const constructorTablas = (array, contenedor, tipo) => {
         case 'precios':
             let tbody = document.getElementById(contenedor);
             // console.log(array);
-                let venta = costoPorIngrediente(array);
-                let row = document.createElement('tr');
-                let col1 = document.createElement('td');
-                col1.innerHTML = array.nomProducto;
-                let col2 = document.createElement('td');
-                col2.innerHTML = venta.toFixed(2);
-                row.appendChild(col1);
-                row.appendChild(col2);
-                tbody.appendChild(row);
+            let venta = costoPorIngrediente(array);
+            let row = document.createElement('tr');
+            let col1 = document.createElement('td');
+            col1.innerHTML = array.nomProducto;
+            let col2 = document.createElement('td');
+            col2.innerHTML = venta.toFixed(2);
+            row.appendChild(col1);
+            row.appendChild(col2);
+            tbody.appendChild(row);
             break;
         default:
+            document.querySelectorAll(`#${contenedor} tr`).forEach(elemento => elemento.remove());
+            console.log(array);
+            
             for (const elemento of array) {
-                let tbodyM = document.getElementById(contenedor);
+                let tbodyDf = document.getElementById(contenedor);
                 let rowM = document.createElement('tr');
                 let colM1 = document.createElement('td');
                 colM1.innerHTML = elemento.materiaPrima;
@@ -205,10 +193,28 @@ const constructorTablas = (array, contenedor, tipo) => {
                 rowM.appendChild(colM1);
                 rowM.appendChild(colM2);
                 rowM.appendChild(colM3);
-                tbodyM.appendChild(rowM);
+                tbodyDf.appendChild(rowM);
             }
             break;
     }
+}
+// MANEJO DEL STORAGE
+const listadoMateriaPrimaJSON = JSON.stringify(listadoMateriaPrimaLocal);
+localStorage.setItem("inventario", listadoMateriaPrimaJSON);
+const inventario = JSON.parse(localStorage.getItem("inventario"));
+
+let nuevaSessionStorage = sessionStorage.getItem("nuevaSession");
+
+if (nuevaSessionStorage) {
+    nuevaSession = nuevaSessionStorage;
+    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("inventario"));
+    console.log(listadoMateriaPrima);
+    constructorTablas(listadoMateriaPrima, "tbMateriales");
+} else {
+    listadoMateriaPrima = JSON.parse(localStorage.getItem("inventario"));
+    console.log(listadoMateriaPrima);
+    sessionStorage.setItem("nuevaSession", "si");
+    constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
 
 const mostrarFormulario = (componente) => {
@@ -258,9 +264,9 @@ const validarFormMateriaPrima = (e) => {
         let costoEmpaque = parseInt(document.getElementById('costoEmpaque').value);
         let materiaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque, costoEmpaque);
         listadoMateriaPrima.push(materiaPrima);
-
-        sessionStorage.setItem("listadoMateriaPrima", JSON.stringify(listadoMateriaPrima));
-        constructorTablas(materiaPrima, "tbMateriales", "materiaPrima");
+        sessionStorage.setItem("inventario", JSON.stringify(listadoMateriaPrima));
+        sessionStorage.setItem("nuevaSession", "no");
+        constructorTablas(JSON.parse(sessionStorage.getItem("inventario")), "tbMateriales");
         empaque.innerHTML = "";
         costoEmpaque.innerHTML = "";
     } else {
@@ -273,7 +279,7 @@ const validarFormMateriaPrima = (e) => {
 const validarFormProducto = (e) => {
     e.preventDefault();
     const ingredientes = [];
-    let existeMateriaPrima= false;
+    let existeMateriaPrima = false;
     let nombreProducto = document.querySelector('#nombreProducto');
 
     // Seleccionar todos los ingedientes del producto
@@ -296,21 +302,22 @@ const validarFormProducto = (e) => {
                 }
             });
         } else {
-            existeMateriaPrima= true
+            existeMateriaPrima = true
             alert("MATERIA PRIMA YA INGRESADA");
         }
     }
 
-    if(!existeMateriaPrima){
+    if (!existeMateriaPrima) {
         let producto = new Producto(nombreProducto.value.toUpperCase(), ingredientes);
         listadoProducto.push(producto);
         constructorTablas(producto, "productos", "producto");
         ocultarFormulario("formProducto");
         nombreProducto.innerHTML = "";
         document.querySelectorAll('.tbIngredientes tr.ingredientes').forEach(elemento => elemento.remove());
-    
-        // Listado de precios
+        sessionStorage.setItem("productos", JSON.stringify(listadoProducto));
+        // Listado de precios        
         constructorTablas(producto, "tbListaPrecios", "precios");
+        sessionStorage.setItem("listadoPrecios", JSON.stringify(listadoPrecios));
     }
 }
 // -------------------------------
@@ -330,5 +337,4 @@ addIngrediente.addEventListener("click", selectIngredientes);
 // -------------------------------
 
 // MOSTRAR LISTADO DEL LOCAL STORAGE
-constructorTablas(listadoMateriaPrima, "tbMateriales", );
 // -------------------------------
