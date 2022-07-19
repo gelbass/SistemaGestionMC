@@ -89,13 +89,6 @@ const validarTexto = (texto, mensaje) => {
     return texto;
 };
 
-const nombresMateriaPrima = () => {
-    console.log("entro");
-    let select = document.getElementsByClassName('selectIngredientes');
-    // let seleccion = document.querySelector(".selectIngredientes");
-
-    console.log(select);
-}
 
 const materiaPrimaExiste = (array, elemento, opcion) => {
     if (opcion) {
@@ -110,9 +103,6 @@ const costoPorIngrediente = (producto) => {
     const MANODEOBRA = 300;
     for (const item of producto.ingredientesProducto) {
         costoIngrediente += (item.cantidad / item.ingrediente.cantidadEmpaque) * item.ingrediente.costoEmpaque;
-        console.log(item.cantidad);
-        console.log(item.ingrediente.cantidadEmpaque);
-        console.log(item.ingrediente.costoEmpaque);
     };
     let venta = costoIngrediente + MANODEOBRA
     listadoPrecios.push({
@@ -165,7 +155,6 @@ const constructorTablas = (array, contenedor, tipo) => {
             break;
         case 'precios':
             let tbody = document.getElementById(contenedor);
-            // console.log(array);
             let venta = costoPorIngrediente(array);
             let row = document.createElement('tr');
             let col1 = document.createElement('td');
@@ -178,8 +167,6 @@ const constructorTablas = (array, contenedor, tipo) => {
             break;
         default:
             document.querySelectorAll(`#${contenedor} tr`).forEach(elemento => elemento.remove());
-            console.log(array);
-            
             for (const elemento of array) {
                 let tbodyDf = document.getElementById(contenedor);
                 let rowM = document.createElement('tr');
@@ -208,11 +195,9 @@ let nuevaSessionStorage = sessionStorage.getItem("nuevaSession");
 if (nuevaSessionStorage) {
     nuevaSession = nuevaSessionStorage;
     listadoMateriaPrima = JSON.parse(sessionStorage.getItem("inventario"));
-    console.log(listadoMateriaPrima);
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 } else {
     listadoMateriaPrima = JSON.parse(localStorage.getItem("inventario"));
-    console.log(listadoMateriaPrima);
     sessionStorage.setItem("nuevaSession", "si");
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
@@ -287,9 +272,6 @@ const validarFormProducto = (e) => {
     for (let i = 0; i < ingredientesSelecionados.length; i++) {
         let ingrediente = ingredientesSelecionados[i];
         let seleccion = ingrediente.querySelector(".selectIngredientes");
-        console.log(seleccion.value);
-        console.log(ingredientes);
-        console.log(materiaPrimaExiste(ingredientes, seleccion.value, false));
         let cantidad = parseInt(ingrediente.querySelector('.cantidadIngrediente').value)
 
         if (!materiaPrimaExiste(ingredientes, seleccion.value, false)) {
