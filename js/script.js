@@ -182,15 +182,14 @@ const sessionExistente = () => {
     nuevaSession = nuevaSessionStorage;
     listadoMateriaPrima = JSON.parse(sessionStorage.getItem("inventario"));
     // listadoProducto = JSON.parse(sessionStorage.getItem("listadopPrecios"));
-    constructorTablas(listadoProducto, "productos");
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
 const nuevoInicioSession = () => {
     listadoMateriaPrima = JSON.parse(localStorage.getItem("inventario"));
-    sessionStorage.setItem("nuevaSession", "si");
+    // sessionStorage.setItem("nuevaSession", "si");
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
-
+nuevaSessionStorage || sessionStorage.setItem("nuevaSession", "si");
 nuevaSessionStorage == 'si' ? nuevoInicioSession() : sessionExistente();
 // --------------------
 
@@ -265,6 +264,7 @@ const agregarIngredientesProducto = (ingredientes, cantidad, seleccion) => {
 const agregarProducto = (nombreProducto,ingredientes) => {
     let producto = new Producto(nombreProducto.value.toUpperCase(), ingredientes);
     listadoProducto.push(producto);
+    sessionStorage.setItem("nuevaSession", "no");
     sessionStorage.setItem("productos", JSON.stringify(listadoProducto));
     constructorTablas(producto, "productos", "producto");
     ocultarFormulario("formProducto");
