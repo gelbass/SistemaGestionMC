@@ -8,33 +8,7 @@ let nuevaSession;
 let listadoMateriaPrima;
 // -------------------------------
 
-// LISTADO DE INGREDIENTES BASICOS PARA EL LOCALSTORAGE
-const listadoMateriaPrimaLocal = [{
-        materiaPrima: "HARINA",
-        cantidadEmpaque: 1000,
-        costoEmpaque: 45
-    },
-    {
-        materiaPrima: "AZUCAR",
-        cantidadEmpaque: 1000,
-        costoEmpaque: 50
-    },
-    {
-        materiaPrima: "MANTEQUILLA",
-        cantidadEmpaque: 250,
-        costoEmpaque: 95
-    },
-    {
-        materiaPrima: "HUEVOS",
-        cantidadEmpaque: 30,
-        costoEmpaque: 200
-    },
-    {
-        materiaPrima: "LECHE",
-        cantidadEmpaque: 1000,
-        costoEmpaque: 35
-    }
-];
+
 // -------------------------------
 
 // BOTONES PARA EVENTOS
@@ -172,25 +146,32 @@ const constructorTablas = (array, contenedor, tipo) => {
     }
 }
 // MANEJO DEL STORAGE
-const listadoMateriaPrimaJSON = JSON.stringify(listadoMateriaPrimaLocal);
-localStorage.setItem("inventario", listadoMateriaPrimaJSON);
-const inventario = JSON.parse(localStorage.getItem("inventario"));
-
-let nuevaSessionStorage = sessionStorage.getItem("nuevaSession");
+// const listadoMateriaPrimaLocal = [];
+const dataJson = async () => {
+    const rest = await fetch("../data/data.json");
+    const data = await rest.json();
+    const listadoMateriaPrimaJSON = JSON.stringify(data);
+    localStorage.setItem("inventario", listadoMateriaPrimaJSON);
+}
 
 const sessionExistente = () => {
     nuevaSession = nuevaSessionStorage;
     listadoMateriaPrima = JSON.parse(sessionStorage.getItem("inventario"));
-    // listadoProducto = JSON.parse(sessionStorage.getItem("listadopPrecios"));
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
 const nuevoInicioSession = () => {
     listadoMateriaPrima = JSON.parse(localStorage.getItem("inventario"));
-    // sessionStorage.setItem("nuevaSession", "si");
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
-nuevaSessionStorage || sessionStorage.setItem("nuevaSession", "si");
-nuevaSessionStorage == 'si' ? nuevoInicioSession() : sessionExistente();
+const continuar = async () =>{
+    await dataJson();
+    nuevaSession || sessionStorage.setItem("nuevaSession", "si");
+    sessionStorage.getItem("nuevaSession") == 'si' ? nuevoInicioSession() : sessionExistente();
+}
+continuar();
+
+const inventario = JSON.parse(localStorage.getItem("inventario"));
+
 // --------------------
 
 const mostrarFormulario = (componente) => {

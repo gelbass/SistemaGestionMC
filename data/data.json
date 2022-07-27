@@ -1,0 +1,27 @@
+[
+    {
+        "materiaPrima": "HARINA",
+        "cantidadEmpaque": 1000,
+        "costoEmpaque": 45
+    },
+    {
+        "materiaPrima": "AZUCAR",
+        "cantidadEmpaque": 1000,
+        "costoEmpaque": 50
+    },
+    {
+        "materiaPrima": "MANTEQUILLA",
+        "cantidadEmpaque": 250,
+        "costoEmpaque": 95
+    },
+    {
+        "materiaPrima": "HUEVOS",
+        "cantidadEmpaque": 30,
+        "costoEmpaque": 200
+    },
+    {
+        "materiaPrima": "LECHE",
+        "cantidadEmpaque": 1000,
+        "costoEmpaque": 35
+    }
+]
