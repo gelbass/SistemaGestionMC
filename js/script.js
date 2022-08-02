@@ -132,9 +132,9 @@ const constructorTablas = (array, contenedor, tipo) => {
 // MANEJO DEL STORAGE
 
 const dataJson = async () => {
-    const restMateriaPrima = await fetch("../data/materiaPrima.json");
+    const restMateriaPrima = await fetch("./data/materiaPrima.json");
     const dataMateriaPrima = await restMateriaPrima.json();
-    const restInventarioMp = await fetch("../data/inventarioMateriaPrima.json");
+    const restInventarioMp = await fetch("./data/inventarioMateriaPrima.json");
     const dataInventarioMp = await restInventarioMp.json();
     const listadoMateriaPrimaJSON = JSON.stringify(dataMateriaPrima);
     localStorage.setItem("materiaPrima", listadoMateriaPrimaJSON);
