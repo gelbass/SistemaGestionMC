@@ -1,0 +1,30 @@
+[
+    {
+        "materiaPrima": "HARINA",
+        "cantidad": 2000
+    },
+    {
+        "materiaPrima": "AZUCAR",
+        "cantidad": 2000
+    },
+    {
+        "materiaPrima": "MANTEQUILLA",
+        "cantidad": 500
+    },
+    {
+        "materiaPrima": "HUEVOS",
+        "cantidad": 60
+    },
+    {
+        "materiaPrima": "LECHE",
+        "cantidad": 2000
+    },
+    {
+        "materiaPrima": "CHOCOLATE",
+        "cantidad": 100
+    },
+    {
+        "materiaPrima": "POLVO DE HORNEAR",
+        "cantidad": 1000
+    }
+]

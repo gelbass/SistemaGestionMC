@@ -1,14 +1,9 @@
-// SIMULADOR DE PRESUPUESTOS PARA DULCES
-
 // Seteo inicial de variables
 
 const listadoProducto = [];
 const listadoPrecios = [];
 let nuevaSession;
 let listadoMateriaPrima;
-// -------------------------------
-
-
 // -------------------------------
 
 // BOTONES PARA EVENTOS
@@ -43,14 +38,6 @@ class Producto {
 // -------------------------------
 
 // FUNCIONES
-const validarTexto = (texto, mensaje) => {
-    let validar = /\d/;
-    while (validar.test(texto) || texto === "") {
-        texto = prompt(mensaje);
-    }
-    return texto;
-};
-
 
 const materiaPrimaExiste = (array, elemento, opcion) => {
     if (opcion) {
@@ -134,45 +121,47 @@ const constructorTablas = (array, contenedor, tipo) => {
                 let colM1 = document.createElement('td');
                 colM1.innerHTML = elemento.materiaPrima;
                 let colM2 = document.createElement('td');
-                colM2.innerHTML = elemento.cantidadEmpaque;
-                let colM3 = document.createElement('td');
-                colM3.innerHTML = elemento.costoEmpaque;
+                colM2.innerHTML = elemento.cantidad;
                 rowM.appendChild(colM1);
                 rowM.appendChild(colM2);
-                rowM.appendChild(colM3);
                 tbodyDf.appendChild(rowM);
             }
             break;
     }
 }
 // MANEJO DEL STORAGE
-// const listadoMateriaPrimaLocal = [];
+
 const dataJson = async () => {
-    const rest = await fetch("../data/data.json");
-    const data = await rest.json();
-    const listadoMateriaPrimaJSON = JSON.stringify(data);
-    localStorage.setItem("inventario", listadoMateriaPrimaJSON);
+    const restMateriaPrima = await fetch("../data/materiaPrima.json");
+    const dataMateriaPrima = await restMateriaPrima.json();
+    const restInventarioMp = await fetch("../data/inventarioMateriaPrima.json");
+    const dataInventarioMp = await restInventarioMp.json();
+    const listadoMateriaPrimaJSON = JSON.stringify(dataMateriaPrima);
+    localStorage.setItem("materiaPrima", listadoMateriaPrimaJSON);
+    const listadoInventarioMpJSON = JSON.stringify(dataInventarioMp);
+    localStorage.setItem("inventarioMp", listadoInventarioMpJSON);
 }
 
 const sessionExistente = () => {
     nuevaSession = nuevaSessionStorage;
-    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("inventario"));
+    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
+
 const nuevoInicioSession = () => {
-    listadoMateriaPrima = JSON.parse(localStorage.getItem("inventario"));
+    listadoMateriaPrima = JSON.parse(localStorage.getItem("inventarioMp"));
     constructorTablas(listadoMateriaPrima, "tbMateriales");
 }
-const continuar = async () =>{
+
+const cargarDatos = async () =>{
     await dataJson();
     nuevaSession || sessionStorage.setItem("nuevaSession", "si");
     sessionStorage.getItem("nuevaSession") == 'si' ? nuevoInicioSession() : sessionExistente();
 }
-continuar();
 
-const inventario = JSON.parse(localStorage.getItem("inventario"));
+cargarDatos();
 
-// --------------------
+// const inventarioMateriPrima = JSON.parse(localStorage.getItem("materiaPrima"));
 
 const mostrarFormulario = (componente) => {
     let formulario = document.getElementById(componente);
@@ -219,9 +208,9 @@ const agregarMateriaPrima = (nombreMateriaPrima) => {
     let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque, costoEmpaque);
     
     listadoMateriaPrima.push(nuevaMateriaPrima);
-    sessionStorage.setItem("inventario", JSON.stringify(listadoMateriaPrima));
+    sessionStorage.setItem("inventarioMp", JSON.stringify(listadoMateriaPrima));
     sessionStorage.setItem("nuevaSession", "no");
-    constructorTablas(JSON.parse(sessionStorage.getItem("inventario")), "tbMateriales");
+    constructorTablas(JSON.parse(sessionStorage.getItem("materiaPrima")), "tbMateriales");
     empaque.innerHTML = "";
     costoEmpaque.innerHTML = "";
     Swal.fire({

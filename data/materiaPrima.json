@@ -23,5 +23,15 @@
         "materiaPrima": "LECHE",
         "cantidadEmpaque": 1000,
         "costoEmpaque": 35
+    },
+    {
+        "materiaPrima": "CHOCOLATE",
+        "cantidadEmpaque": 500,
+        "costoEmpaque": 180
+    },
+    {
+        "materiaPrima": "POLVO DE HORNEAR",
+        "cantidadEmpaque": 1000,
+        "costoEmpaque": 150
     }
 ]
