@@ -1,0 +1,140 @@
+[
+    {
+        "nomProducto": "TORTA DE VAINILLA",
+        "ingredientesProducto": [{
+                "ingrediente": {
+                    "materiaPrima": "HARINA"
+                },
+                "cantidad": 500
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "AZUCAR"
+                },
+                "cantidad": 500
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "MANTEQUILLA"
+                },
+                "cantidad": 100
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "LECHE"
+                },
+                "cantidad": 140
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "POLVO DE HORNEAR"
+                },
+                "cantidad": 10
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "HUEVOS"
+                },
+                "cantidad": 3
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "VAINILLA"
+                },
+                "cantidad": 10
+            }
+        ]
+    },
+    {
+        "nomProducto": "TORTA DE CHOCOLATE",
+        "ingredientesProducto": [{
+                "ingrediente": {
+                    "materiaPrima": "HARINA"
+                },
+                "cantidad": 500
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "AZUCAR"
+                },
+                "cantidad": 500
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "MANTEQUILLA"
+                },
+                "cantidad": 100
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "LECHE"
+                },
+                "cantidad": 140
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "POLVO DE HORNEAR"
+                },
+                "cantidad": 10
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "HUEVOS"
+                },
+                "cantidad": 3
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "CACAO"
+                },
+                "cantidad": 20
+            }
+        ]
+    },
+    {
+        "nomProducto": "CUPCAKE DE LIMON",
+        "ingredientesProducto": [{
+                "ingrediente": {
+                    "materiaPrima": "HARINA"
+                },
+                "cantidad": 160
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "AZUCAR"
+                },
+                "cantidad": 60
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "MANTEQUILLA"
+                },
+                "cantidad": 100
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "LECHE"
+                },
+                "cantidad": 120
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "POLVO DE HORNEAR"
+                },
+                "cantidad": 10
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "HUEVOS"
+                },
+                "cantidad": 2
+            },
+            {
+                "ingrediente": {
+                    "materiaPrima": "LIMON"
+                },
+                "cantidad": 1
+            }
+        ]
+    }
+]

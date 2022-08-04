@@ -25,7 +25,7 @@
         "costoEmpaque": 35
     },
     {
-        "materiaPrima": "CHOCOLATE",
+        "materiaPrima": "CACAO",
         "cantidadEmpaque": 500,
         "costoEmpaque": 180
     },
@@ -33,5 +33,15 @@
         "materiaPrima": "POLVO DE HORNEAR",
         "cantidadEmpaque": 1000,
         "costoEmpaque": 150
+    },
+    {
+        "materiaPrima": "VAINILLA",
+        "cantidadEmpaque": 250,
+        "costoEmpaque": 150
+    },
+    {
+        "materiaPrima": "LIMON",
+        "cantidadEmpaque": 30,
+        "costoEmpaque": 15
     }
 ]

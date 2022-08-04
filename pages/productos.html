@@ -45,7 +45,7 @@
                                 Inventario
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Stock</a></li>
+                                <li><a class="dropdown-item" href="inventario.html">Stock</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -58,7 +58,7 @@
                                 Productos
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="productos.html">Stock</a></li>
+                                <li><a class="dropdown-item" href="#">Stock</a></li>
                                 <li>
                             </ul>
                         </li>
@@ -70,8 +70,8 @@
     </header>
     <main id="main">
         <div class="menuSecundario shadow-sm">
-            <div class="menuSecundario__items" id="addMateriaPrima">
-                Agregar Materia Prima
+            <div class="menuSecundario__items" id="addProducto">
+                Agregar Producto
             </div>
             <hr>
         </div>
@@ -79,31 +79,21 @@
             <div class="container-fluid">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item" aria-current="page">Home</li>
-                        <li class="breadcrumb-item active" aria-current="page">Inventario</li>
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
                     </ol>
                 </nav>
             </div>
 
-            <!-- MATERIA PRIMA -->
+            <!-- PRODUCTOS -->
             <div class="container p-4 gx-2 rounded shadow-sm bg-light">
-                <h2>Materia Prima</h2>
-                <div class="container">
-                    <table class="table" id="materiales">
-                        <thead>
-                            <tr>
-                                <th>Materia Prima</th>
-                                <th>Cant. Empaque</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbMateriales"></tbody>
-                    </table>
-                </div>
+                <h2>Productos</h2>
+                <div class="container" id="productos"></div>
             </div>
+            <br>
         </div>
 
         <!-- FORMULARIOS MODALES - MATERIALES -->
-        <div class="container__formulario" id="formMateriaPrima">
+        <!-- <div class="container__formulario" id="formMateriaPrima">
             <h2 class="d-flex justify-content-center">Ingreso de materia prima</h2>
             <form class="formulario" action="">
                 <div class="form-group">
@@ -131,7 +121,7 @@
                     <input class="btn" type="submit" value="guardar">
                 </div>
             </form>
-        </div>
+        </div> -->
         <!-- FORMULARIOS MODALES - PRODUCTOS -->
         <div class="container__formulario container__formulario--productos" id="formProducto">
             <h2 class="d-flex justify-content-center">Ingreso de Productos</h2>
@@ -161,7 +151,6 @@
                 </div>
             </form>
         </div>
-
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
@@ -171,7 +160,6 @@
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
     <script src="../js/script.js"></script>
-    <script src="../js/inventario.js"></script>
 </body>
 
 </html>

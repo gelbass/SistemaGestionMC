@@ -20,11 +20,19 @@
         "cantidad": 2000
     },
     {
-        "materiaPrima": "CHOCOLATE",
+        "materiaPrima": "CACAO",
         "cantidad": 100
     },
     {
         "materiaPrima": "POLVO DE HORNEAR",
         "cantidad": 1000
+    },
+    {
+        "materiaPrima": "LIMON",
+        "cantidad": 60
+    },
+    {
+        "materiaPrima": "VAINILLA",
+        "cantidad": 250
     }
 ]

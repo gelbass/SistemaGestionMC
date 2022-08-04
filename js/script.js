@@ -1,8 +1,9 @@
 // Seteo inicial de variables
 
-const listadoProducto = [];
+let listadoProducto;
 const listadoPrecios = [];
-let nuevaSession;
+
+let inventarioMateriaPrima;
 let listadoMateriaPrima;
 // -------------------------------
 
@@ -47,71 +48,78 @@ const materiaPrimaExiste = (array, elemento, opcion) => {
     }
 }
 
-const costoPorIngrediente = ({nomProducto,ingredientesProducto}) => {
-    let costoIngrediente = 0;
-    const MANODEOBRA = 300;
-    for (const item of ingredientesProducto) {
-        costoIngrediente += (item.cantidad / item.ingrediente.cantidadEmpaque) * item.ingrediente.costoEmpaque;
-    };
-    let venta = costoIngrediente + MANODEOBRA
-    listadoPrecios.push({
-        producto: nomProducto,
-        precioVenta: venta
-    });
-    return venta;
-}
+// const costoPorIngrediente = ({
+//     nomProducto,
+//     ingredientesProducto
+// }) => {
+//     let costoIngrediente = 0;
+//     const MANODEOBRA = 300;
+//     for (const item of ingredientesProducto) {
+//         costoIngrediente += (item.cantidad / item.ingrediente.cantidadEmpaque) * item.ingrediente.costoEmpaque;
+//     };
+//     let venta = costoIngrediente + MANODEOBRA
+//     listadoPrecios.push({
+//         producto: nomProducto,
+//         precioVenta: venta
+//     });
+//     return venta;
+// }
 
 // CREAR TABLAS
 const constructorTablas = (array, contenedor, tipo) => {
     switch (tipo) {
         case 'producto':
             let producto = document.createElement('h3');
-            producto.innerHTML = array.nomProducto;
-            document.getElementById(contenedor).append(producto);
+            for (const elemento of array) {
+                producto.innerHTML = elemento.nomProducto;
+                document.getElementById(contenedor).append(producto);
 
-            let tableP = document.createElement('table');
-            let theadP = document.createElement('thead');
-            let tbodyP = document.createElement('tbody');
+                let tableP = document.createElement('table');
+                let theadP = document.createElement('thead');
+                let tbodyP = document.createElement('tbody');
 
-            tableP.appendChild(theadP);
-            tableP.appendChild(tbodyP);
-            tableP.className = 'table';
+                tableP.appendChild(theadP);
+                tableP.appendChild(tbodyP);
+                tableP.className = 'table';
 
-            document.getElementById(contenedor).appendChild(tableP);
+                document.getElementById(contenedor).appendChild(tableP);
 
-            let tituloP = document.createElement('tr');
-            let tP1 = document.createElement('th');
-            let tP2 = document.createElement('th');
+                let tituloP = document.createElement('tr');
+                let tP1 = document.createElement('th');
+                let tP2 = document.createElement('th');
 
-            tP1.innerHTML = 'Materia Prima';
-            tP2.innerHTML = 'Cantidad';
+                tP1.innerHTML = 'Materia Prima';
+                tP2.innerHTML = 'Cantidad';
 
-            tituloP.appendChild(tP1);
-            tituloP.appendChild(tP2);
-            theadP.appendChild(tituloP);
-            for (const valorElemento of array.ingredientesProducto) {
-                let rowP = document.createElement('tr');
-                let colP1 = document.createElement('td');
-                let colP2 = document.createElement('td');
+                tituloP.appendChild(tP1);
+                tituloP.appendChild(tP2);
+                theadP.appendChild(tituloP);
+                for (const valorElemento of elemento.ingredientesProducto) {
+                    let rowP = document.createElement('tr');
+                    let colP1 = document.createElement('td');
+                    let colP2 = document.createElement('td');
 
-                colP1.innerHTML = valorElemento.ingrediente.materiaPrima;
-                colP2.innerHTML = valorElemento.cantidad;
-                rowP.appendChild(colP1);
-                rowP.appendChild(colP2);
-                tbodyP.appendChild(rowP);
+                    colP1.innerHTML = valorElemento.ingrediente.materiaPrima;
+                    colP2.innerHTML = valorElemento.cantidad;
+                    rowP.appendChild(colP1);
+                    rowP.appendChild(colP2);
+                    tbodyP.appendChild(rowP);
+                }
             }
             break;
         case 'precios':
-            let tbody = document.getElementById(contenedor);
-            let venta = costoPorIngrediente(array);
-            let row = document.createElement('tr');
-            let col1 = document.createElement('td');
-            col1.innerHTML = array.nomProducto;
-            let col2 = document.createElement('td');
-            col2.innerHTML = venta.toFixed(2);
-            row.appendChild(col1);
-            row.appendChild(col2);
-            tbody.appendChild(row);
+            for (const elemento of array) {
+                let tbody = document.getElementById(contenedor);
+                // let venta = costoPorIngrediente(array);
+                let row = document.createElement('tr');
+                let col1 = document.createElement('td');
+                col1.innerHTML = elemento.producto;
+                let col2 = document.createElement('td');
+                col2.innerHTML = elemento.precioVenta;
+                row.appendChild(col1);
+                row.appendChild(col2);
+                tbody.appendChild(row);
+            }
             break;
         default:
             document.querySelectorAll(`#${contenedor} tr`).forEach(elemento => elemento.remove());
@@ -133,35 +141,69 @@ const constructorTablas = (array, contenedor, tipo) => {
 
 const dataJson = async () => {
     const restMateriaPrima = await fetch("./data/materiaPrima.json");
-    const dataMateriaPrima = await restMateriaPrima.json();
     const restInventarioMp = await fetch("./data/inventarioMateriaPrima.json");
+    const restProductos = await fetch("./data/productos.json");
+
+    const dataMateriaPrima = await restMateriaPrima.json();
     const dataInventarioMp = await restInventarioMp.json();
+    const dataProductos = await restProductos.json();
     const listadoMateriaPrimaJSON = JSON.stringify(dataMateriaPrima);
-    localStorage.setItem("materiaPrima", listadoMateriaPrimaJSON);
     const listadoInventarioMpJSON = JSON.stringify(dataInventarioMp);
+    const listadoProductosJSON = JSON.stringify(dataProductos);
+
+    localStorage.setItem("materiaPrima", listadoMateriaPrimaJSON);
     localStorage.setItem("inventarioMp", listadoInventarioMpJSON);
+    localStorage.setItem("productos", listadoProductosJSON);
 }
 
 const sessionExistente = () => {
-    nuevaSession = nuevaSessionStorage;
-    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
-    constructorTablas(listadoMateriaPrima, "tbMateriales");
+    console.log("existe");
+    sessionStorage.setItem("nuevaSession", "no");
+    inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
+    listadoProducto = JSON.parse(sessionStorage.getItem("productos"));
+    // constructorTablas(inventarioMateriaPrima, "tbMateriales");
+    // constructorTablas(listadoProducto, "productos", "producto");
 }
 
 const nuevoInicioSession = () => {
-    listadoMateriaPrima = JSON.parse(localStorage.getItem("inventarioMp"));
-    constructorTablas(listadoMateriaPrima, "tbMateriales");
+    console.log("nuevo");
+    listadoMateriaPrima = JSON.parse(localStorage.getItem("materiaPrima"));
+    inventarioMateriaPrima = JSON.parse(localStorage.getItem("inventarioMp"));
+    listadoProducto = JSON.parse(localStorage.getItem("productos"));
+    // constructorTablas(inventarioMateriaPrima, "tbMateriales");
+    // constructorTablas(listadoProducto, "productos", "producto");
 }
 
-const cargarDatos = async () =>{
+const calculoPrecio = (listadoMateriaPrima, listadoProducto) => {
+    for (const producto of listadoProducto) {
+        let costoIngrediente = 0;
+        const MANODEOBRA = 300;
+        for (const ingredientes of producto.ingredientesProducto) {
+            let ingredienteCalulo = ingredientes.ingrediente;
+            const id = listadoMateriaPrima.find(valor => valor.materiaPrima === ingredienteCalulo.materiaPrima);
+            costoIngrediente += (ingredientes.cantidad / id.cantidadEmpaque) * id.costoEmpaque;
+        }
+        let venta = costoIngrediente + MANODEOBRA
+        listadoPrecios.push({
+            producto: producto.nomProducto,
+            precioVenta: venta.toFixed(2)
+        });
+    }
+    constructorTablas(listadoPrecios, "tbListaPrecios", "precios");
+}
+
+const cargarDatos = async () => {
     await dataJson();
-    nuevaSession || sessionStorage.setItem("nuevaSession", "si");
+    console.log("cargarDatos");
+    sessionStorage.getItem("nuevaSession") || sessionStorage.setItem("nuevaSession", "si");
     sessionStorage.getItem("nuevaSession") == 'si' ? nuevoInicioSession() : sessionExistente();
+    // sessionStorage.getItem("nuevaSession") == 'si' ? console.log("SI") : console.log("NO");;
+
+    calculoPrecio(listadoMateriaPrima, listadoProducto);
 }
 
 cargarDatos();
 
-// const inventarioMateriPrima = JSON.parse(localStorage.getItem("materiaPrima"));
 
 const mostrarFormulario = (componente) => {
     let formulario = document.getElementById(componente);
@@ -183,7 +225,7 @@ const selectIngredientes = () => {
     let select = document.createElement("select");
     select.className = "form-select selectIngredientes";
 
-    for (const item of listadoMateriaPrima) {
+    for (const item of inventarioMateriaPrima) {
         let opcion = document.createElement('option');
         opcion.setAttribute("value", item.materiaPrima);
         opcion.text = item.materiaPrima;
@@ -206,11 +248,12 @@ const agregarMateriaPrima = (nombreMateriaPrima) => {
     let empaque = parseInt(document.getElementById('cantidadEmpaque').value);
     let costoEmpaque = parseInt(document.getElementById('costoEmpaque').value);
     let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque, costoEmpaque);
-    
-    listadoMateriaPrima.push(nuevaMateriaPrima);
-    sessionStorage.setItem("inventarioMp", JSON.stringify(listadoMateriaPrima));
+
+    inventarioMateriaPrima.push(nuevaMateriaPrima);
+    sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
     sessionStorage.setItem("nuevaSession", "no");
-    constructorTablas(JSON.parse(sessionStorage.getItem("materiaPrima")), "tbMateriales");
+    inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
+    constructorTablas(inventarioMateriaPrima, "tbMateriales");
     empaque.innerHTML = "";
     costoEmpaque.innerHTML = "";
     Swal.fire({
@@ -221,7 +264,7 @@ const agregarMateriaPrima = (nombreMateriaPrima) => {
 }
 
 const agregarIngredientesProducto = (ingredientes, cantidad, seleccion) => {
-    listadoMateriaPrima.find(elemento => {
+    inventarioMateriaPrima.find(elemento => {
         if (elemento.materiaPrima === seleccion.value) {
             ingredientes.push({
                 ingrediente: elemento,
@@ -231,7 +274,7 @@ const agregarIngredientesProducto = (ingredientes, cantidad, seleccion) => {
     });
 }
 
-const agregarProducto = (nombreProducto,ingredientes) => {
+const agregarProducto = (nombreProducto, ingredientes) => {
     let producto = new Producto(nombreProducto.value.toUpperCase(), ingredientes);
     listadoProducto.push(producto);
     sessionStorage.setItem("nuevaSession", "no");
@@ -241,8 +284,8 @@ const agregarProducto = (nombreProducto,ingredientes) => {
     nombreProducto.innerHTML = "";
     document.querySelectorAll('.tbIngredientes tr.ingredientes').forEach(elemento => elemento.remove());
     // Listado de precios        
-    constructorTablas(producto, "tbListaPrecios", "precios");
-    sessionStorage.setItem("listadoPrecios", JSON.stringify(listadoPrecios));    
+    listadoPrecios = sessionStorage.setItem("listadoPrecios", JSON.stringify(listadoPrecios));
+    constructorTablas(listadoPrecios, "tbListaPrecios", "precios");
     Swal.fire({
         icon: 'success',
         title: 'Ingreso Exitoso',
@@ -273,10 +316,9 @@ const validarFormProducto = (e) => {
     for (let i = 0; i < ingredientesSelecionados.length; i++) {
         let ingrediente = ingredientesSelecionados[i];
         let seleccion = ingrediente.querySelector(".selectIngredientes");
-        let cantidad = parseInt(ingrediente.querySelector('.cantidadIngrediente').value)
+        let cantidad = parseInt(ingrediente.querySelector('.cantidadIngrediente').value);
         !materiaPrimaExiste(ingredientes, seleccion.value, false) ? agregarIngredientesProducto(ingredientes, cantidad, seleccion) : existeMateriaPrima = true;
-    }
-    !existeMateriaPrima ? agregarProducto(nombreProducto,ingredientes) : Swal.fire({
+    }!existeMateriaPrima ? agregarProducto(nombreProducto, ingredientes) : Swal.fire({
         icon: 'error',
         title: 'Error. Ingreso de producto',
         text: 'No puede seleccionar varias veces la misma materia prima.',
@@ -285,15 +327,15 @@ const validarFormProducto = (e) => {
 // -------------------------------
 
 // EVENTOS
-menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formMateriaPrima"));
-cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formMateriaPrima"));
+// menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formMateriaPrima"));
+// cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formMateriaPrima"));
 
-menuSecundarioProducto.addEventListener("click", () => mostrarFormulario("formProducto"));
-cerrarFormularioProducto.addEventListener("click", () => ocultarFormulario("formProducto"));
+// menuSecundarioProducto.addEventListener("click", () => mostrarFormulario("formProducto"));
+// cerrarFormularioProducto.addEventListener("click", () => ocultarFormulario("formProducto"));
 
-formularioMateriaPrima.addEventListener("submit", validarFormMateriaPrima);
-formularioProducto.addEventListener("submit", validarFormProducto);
+// formularioMateriaPrima.addEventListener("submit", validarFormMateriaPrima);
+// formularioProducto.addEventListener("submit", validarFormProducto);
 
-addIngrediente.addEventListener("click", selectIngredientes);
+// addIngrediente.addEventListener("click", selectIngredientes);
 
 // -------------------------------
