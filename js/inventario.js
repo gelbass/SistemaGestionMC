@@ -1,7 +1,8 @@
-sessionStorage.setItem("nuevaSession", "no");
-sessionStorage.setItem("materiaPrima",localStorage.getItem("materiaPrima"));
-sessionStorage.setItem("productos",localStorage.getItem("productos"));
-sessionStorage.setItem("inventarioMp",localStorage.getItem("inventarioMp"));
-inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
-console.log(inventarioMateriaPrima);
+// LLAMADA FUNCIONES
+dataSession();
 constructorTablas(inventarioMateriaPrima, "tbMateriales");
+// ----------------
+
+menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formMateriaPrima"));
+cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formMateriaPrima"));
+formularioMateriaPrima.addEventListener("submit", validarFormMateriaPrima);
