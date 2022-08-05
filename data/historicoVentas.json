@@ -1,0 +1,44 @@
+[{
+        "mes": "ENERO",
+        "ventas": [{
+                "dia": 10,
+                "venta": 20
+            },
+            {
+                "dia": 13,
+                "venta": 23
+            },
+            {
+                "dia": 14,
+                "venta": 14
+            },
+            {
+                "dia": 15,
+                "venta": 20
+            },
+            {
+                "dia": 19,
+                "venta": 18
+            },
+            {
+                "dia": 20,
+                "venta": 40
+            },
+            {
+                "dia": 22,
+                "venta": 10
+            },
+            {
+                "dia": 25,
+                "venta": 13
+            }
+        ]
+    },
+    {
+        "mes": "FEBRERO",
+        "ventas":[{
+            "dia": 1,
+            "venta": 50
+        }]
+    }
+]

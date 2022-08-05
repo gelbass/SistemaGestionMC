@@ -109,10 +109,8 @@ const constructorTablas = (array, contenedor, tipo) => {
             }
             break;
         case 'precios':
-            console.log(array);
             for (const elemento of array) {
                 let tbody = document.getElementById(contenedor);
-                // let venta = costoPorIngrediente(array);
                 let row = document.createElement('tr');
                 let col1 = document.createElement('td');
                 col1.innerHTML = elemento.producto;
@@ -142,20 +140,25 @@ const constructorTablas = (array, contenedor, tipo) => {
 // MANEJO DEL STORAGE
 
 const dataJson = async () => {
-    const restMateriaPrima = await fetch("../data/materiaPrima.json");
-    const restInventarioMp = await fetch("../data/inventarioMateriaPrima.json");
-    const restProductos = await fetch("../data/productos.json");
+    const restMateriaPrima = await fetch("./data/materiaPrima.json");
+    const restInventarioMp = await fetch("./data/inventarioMateriaPrima.json");
+    const restProductos = await fetch("./data/productos.json");
+    const restHistoricoVentas = await fetch("./data/historicoVentas.json");
 
     const dataMateriaPrima = await restMateriaPrima.json();
     const dataInventarioMp = await restInventarioMp.json();
     const dataProductos = await restProductos.json();
+    const dataHistoricoVentas = await restHistoricoVentas.json();
+
     const listadoMateriaPrimaJSON = JSON.stringify(dataMateriaPrima);
     const listadoInventarioMpJSON = JSON.stringify(dataInventarioMp);
     const listadoProductosJSON = JSON.stringify(dataProductos);
+    const historicoVentasJSON = JSON.stringify(dataHistoricoVentas);
 
     localStorage.setItem("materiaPrima", listadoMateriaPrimaJSON);
     localStorage.setItem("inventarioMp", listadoInventarioMpJSON);
     localStorage.setItem("productos", listadoProductosJSON);
+    localStorage.setItem("historicoVentas", historicoVentasJSON);
 }
 
 const sessionExistente = () => {
