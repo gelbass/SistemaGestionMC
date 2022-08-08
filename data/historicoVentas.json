@@ -40,5 +40,74 @@
             "dia": 1,
             "venta": 50
         }]
+    },
+    {
+        "mes": "MARZO",
+        "ventas":[{
+            "dia": 5,
+            "venta": 20
+        }]
+    },
+    {
+        "mes": "ABRIL",
+        "ventas":[{
+            "dia": 6,
+            "venta": 30
+        }]
+    },{
+        "mes": "MAYO",
+        "ventas":[{
+            "dia": 30,
+            "venta": 30
+        }]
+    },
+    {
+        "mes": "JUNIO",
+        "ventas":[{
+            "dia": 16,
+            "venta": 63
+        }]
+    },
+    {
+        "mes": "JULIO",
+        "ventas":[{
+            "dia": 22,
+            "venta": 40
+        }]
+    },
+    {
+        "mes": "AGOSTO",
+        "ventas":[{
+            "dia": 14,
+            "venta": 55
+        }]
+    },
+    {
+        "mes": "SEPTIEMBRE",
+        "ventas":[{
+            "dia": 10,
+            "venta": 59
+        }]
+    },
+    {
+        "mes": "OCTUBRE",
+        "ventas":[{
+            "dia": 12,
+            "venta": 56
+        }]
+    },
+    {
+        "mes": "NOVIEMBRE",
+        "ventas":[{
+            "dia": 8,
+            "venta": 20
+        }]
+    },
+    {
+        "mes": "DICIEMBRE",
+        "ventas":[{
+            "dia": 5,
+            "venta": 70
+        }]
     }
 ]

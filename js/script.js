@@ -49,30 +49,14 @@ const materiaPrimaExiste = (array, elemento, opcion) => {
     }
 }
 
-// const costoPorIngrediente = ({
-//     nomProducto,
-//     ingredientesProducto
-// }) => {
-//     let costoIngrediente = 0;
-//     const MANODEOBRA = 300;
-//     for (const item of ingredientesProducto) {
-//         costoIngrediente += (item.cantidad / item.ingrediente.cantidadEmpaque) * item.ingrediente.costoEmpaque;
-//     };
-//     let venta = costoIngrediente + MANODEOBRA
-//     listadoPrecios.push({
-//         producto: nomProducto,
-//         precioVenta: venta
-//     });
-//     return venta;
-// }
-
 // CREAR TABLAS
 const constructorTablas = (array, contenedor, tipo) => {
     switch (tipo) {
         case 'producto':
-            let producto = document.createElement('h3');
             for (const elemento of array) {
+                let producto = document.createElement('h3');
                 producto.innerHTML = elemento.nomProducto;
+                console.log(elemento.nomProducto);
                 document.getElementById(contenedor).append(producto);
 
                 let tableP = document.createElement('table');
@@ -166,16 +150,12 @@ const sessionExistente = () => {
     listadoMateriaPrima = JSON.parse(localStorage.getItem("materiaPrima"));
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
     listadoProducto = JSON.parse(sessionStorage.getItem("productos"));
-    // constructorTablas(inventarioMateriaPrima, "tbMateriales");
-    // constructorTablas(listadoProducto, "productos", "producto");
 }
 
 const nuevoInicioSession = () => {
     listadoMateriaPrima = JSON.parse(localStorage.getItem("materiaPrima"));
     inventarioMateriaPrima = JSON.parse(localStorage.getItem("inventarioMp"));
     listadoProducto = JSON.parse(localStorage.getItem("productos"));
-    // constructorTablas(inventarioMateriaPrima, "tbMateriales");
-    // constructorTablas(listadoProducto, "productos", "producto");
 }
 
 const calculoPrecio = (listadoMateriaPrima, listadoProducto) => {
@@ -204,7 +184,8 @@ const cargarDatos = async () => {
     sessionStorage.getItem("nuevaSession") == 'si' ? nuevoInicioSession() : sessionExistente();
     calculoPrecio(listadoMateriaPrima, listadoProducto);
 }
-
+// --------------------
+// CONTROL FORMULARIOS
 const mostrarFormulario = (componente) => {
     let formulario = document.getElementById(componente);
     formulario.style.display = "block";
@@ -253,7 +234,7 @@ const agregarMateriaPrima = (nombreMateriaPrima) => {
     sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
     sessionStorage.setItem("nuevaSession", "no");
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
-    constructorTablas(inventarioMateriaPrima, "tbMateriales");
+    // constructorTablas(inventarioMateriaPrima, "tbMateriales");
     empaque.innerHTML = "";
     costoEmpaque.innerHTML = "";
     Swal.fire({
