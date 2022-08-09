@@ -48,7 +48,9 @@ const materiaPrimaExiste = (array, elemento, opcion) => {
         return array.some(resultado => resultado.ingrediente.materiaPrima == elemento);
     }
 }
+const acciones = () => {
 
+}
 // CREAR TABLAS
 const constructorTablas = (array, contenedor, tipo) => {
     switch (tipo) {
@@ -103,6 +105,27 @@ const constructorTablas = (array, contenedor, tipo) => {
                 row.appendChild(col1);
                 row.appendChild(col2);
                 tbody.appendChild(row);
+            }
+            break;
+        case 'materiaPrima':
+            document.querySelectorAll(`#${contenedor} tr`).forEach(elemento => elemento.remove());
+            for (const elemento of array) {
+                let tbodyDf = document.getElementById(contenedor);
+                let rowM = document.createElement('tr');
+                let colM1 = document.createElement('td');
+                colM1.innerHTML = elemento.materiaPrima;
+                let colM2 = document.createElement('td');
+                colM2.innerHTML = elemento.cantidadEmpaque;
+                let colM3 = document.createElement('td');
+                colM3.innerHTML = elemento.costoEmpaque;
+                colM2.innerHTML = elemento.cantidadEmpaque;
+                let colM4 = document.createElement('td');
+                colM4.innerHTML = `+  -`;
+                rowM.appendChild(colM1);
+                rowM.appendChild(colM2);
+                rowM.appendChild(colM3);
+                rowM.appendChild(colM4);
+                tbodyDf.appendChild(rowM);
             }
             break;
         default:
@@ -228,13 +251,12 @@ const selectIngredientes = () => {
 const agregarMateriaPrima = (nombreMateriaPrima) => {
     let empaque = parseInt(document.getElementById('cantidadEmpaque').value);
     let costoEmpaque = parseInt(document.getElementById('costoEmpaque').value);
-    let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque, costoEmpaque);
+    let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque);
 
     inventarioMateriaPrima.push(nuevaMateriaPrima);
     sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
     sessionStorage.setItem("nuevaSession", "no");
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
-    // constructorTablas(inventarioMateriaPrima, "tbMateriales");
     empaque.innerHTML = "";
     costoEmpaque.innerHTML = "";
     Swal.fire({
@@ -313,5 +335,6 @@ const dataSession = () => {
     sessionStorage.setItem("inventarioMp", localStorage.getItem("inventarioMp"));
     productos = JSON.parse(sessionStorage.getItem("productos"));
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
+    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
 }
 // -------------------------------
