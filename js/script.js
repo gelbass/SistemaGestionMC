@@ -16,9 +16,11 @@ let cerrarFormularioMateriaPrima = document.getElementById('cerrarFormularioMp')
 let cerrarFormularioProducto = document.getElementById('cerrarFormularioProducto');
 
 let formularioMateriaPrima = document.getElementById('formMateriaPrima');
+let editarFormularioMateriaPrima = document.getElementById('editarFormMateriaPrima');
 let formularioProducto = document.getElementById('formProducto');
 
 let addIngrediente = document.getElementById('addIngrediente');
+
 
 // -------------------------------
 
@@ -48,9 +50,32 @@ const materiaPrimaExiste = (array, elemento, opcion) => {
         return array.some(resultado => resultado.ingrediente.materiaPrima == elemento);
     }
 }
-const acciones = () => {
 
+const crearBotonAccion = () => {
+    let tbody = document.getElementById("tbMateriaPrima");
+    let row = tbody.getElementsByTagName('tr');
+    let col = tbody.getElementsByClassName('accion')
+    let boton = document.createElement("input");
+    console.log(col);
+    boton.type = "button";
+    boton.className = "btn";
+    col.appendChild(boton);
+    // row.appendChild(boton);
+    // tbody.appendChild(boton);
 }
+
+const mostrarFormularioEditable = (componente, materiaPrima, cantidad, costo) => {
+    console.log("entro");
+    let formulario = document.getElementById(componente);
+    formulario.style.display = "block";
+    let inputMateriaPrima = document.getElementById('nombreMateriaPrima');
+    let inputCantidad = document.getElementById('cantidadEmpaque');
+    let inputCosto = document.getElementById('costoEmpaque');
+    inputMateriaPrima.value = materiaPrima;
+    inputCantidad.value = cantidad;
+    inputCosto.value = costo;
+}
+
 // CREAR TABLAS
 const constructorTablas = (array, contenedor, tipo) => {
     switch (tipo) {
@@ -109,24 +134,38 @@ const constructorTablas = (array, contenedor, tipo) => {
             break;
         case 'materiaPrima':
             document.querySelectorAll(`#${contenedor} tr`).forEach(elemento => elemento.remove());
+            let i = 1;
             for (const elemento of array) {
                 let tbodyDf = document.getElementById(contenedor);
                 let rowM = document.createElement('tr');
+                rowM.data = [elemento.materiaPrima, elemento.cantidadEmpaque, elemento.costoEmpaque];
                 let colM1 = document.createElement('td');
                 colM1.innerHTML = elemento.materiaPrima;
                 let colM2 = document.createElement('td');
                 colM2.innerHTML = elemento.cantidadEmpaque;
                 let colM3 = document.createElement('td');
                 colM3.innerHTML = elemento.costoEmpaque;
-                colM2.innerHTML = elemento.cantidadEmpaque;
                 let colM4 = document.createElement('td');
-                colM4.innerHTML = `+  -`;
+                
+                colM4.className = "accion";
+                let boton = document.createElement("input");
+                // console.log(col);
+                boton.type = "button";
+                boton.className = `btn btn__sm btn_${i}`;
+                boton.value = 'EDITAR';
+                
+                colM4.appendChild(boton);
                 rowM.appendChild(colM1);
                 rowM.appendChild(colM2);
                 rowM.appendChild(colM3);
                 rowM.appendChild(colM4);
                 tbodyDf.appendChild(rowM);
+                
+                let editarMateriaPrima = document.querySelector(`.btn_${i}`);
+                editarMateriaPrima.addEventListener("click", () => mostrarFormularioEditable("editarFormMateriaPrima", elemento.materiaPrima,elemento.cantidadEmpaque, elemento.costoEmpaque));
+                i++;
             }
+
             break;
         default:
             document.querySelectorAll(`#${contenedor} tr`).forEach(elemento => elemento.remove());
@@ -170,7 +209,7 @@ const dataJson = async () => {
 
 const sessionExistente = () => {
     sessionStorage.setItem("nuevaSession", "no");
-    listadoMateriaPrima = JSON.parse(localStorage.getItem("materiaPrima"));
+    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
     listadoProducto = JSON.parse(sessionStorage.getItem("productos"));
 }
@@ -182,6 +221,10 @@ const nuevoInicioSession = () => {
 }
 
 const calculoPrecio = (listadoMateriaPrima, listadoProducto) => {
+    console.log("entro");
+    console.log(listadoMateriaPrima);
+    listadoPrecios.splice(0,listadoPrecios.length);
+    console.log(listadoPrecios);
     for (const producto of listadoProducto) {
         let costoIngrediente = 0;
         const MANODEOBRA = 300;
@@ -189,6 +232,7 @@ const calculoPrecio = (listadoMateriaPrima, listadoProducto) => {
             let ingredienteCalulo = ingredientes.ingrediente;
             const id = listadoMateriaPrima.find(valor => valor.materiaPrima === ingredienteCalulo.materiaPrima);
             costoIngrediente += (ingredientes.cantidad / id.cantidadEmpaque) * id.costoEmpaque;
+            console.log(ingredientes.cantidad+" "+id.cantidadEmpaque +" "+ id.costoEmpaque);
         }
         let venta = costoIngrediente + MANODEOBRA
         listadoPrecios.push({
@@ -205,14 +249,15 @@ const cargarDatos = async () => {
     await dataJson();
     sessionStorage.getItem("nuevaSession") || sessionStorage.setItem("nuevaSession", "si");
     sessionStorage.getItem("nuevaSession") == 'si' ? nuevoInicioSession() : sessionExistente();
-    calculoPrecio(listadoMateriaPrima, listadoProducto);
 }
+
 // --------------------
 // CONTROL FORMULARIOS
 const mostrarFormulario = (componente) => {
     let formulario = document.getElementById(componente);
     formulario.style.display = "block";
 }
+
 
 const ocultarFormulario = (componente) => {
     let formulario = document.getElementById(componente);
@@ -251,18 +296,38 @@ const selectIngredientes = () => {
 const agregarMateriaPrima = (nombreMateriaPrima) => {
     let empaque = parseInt(document.getElementById('cantidadEmpaque').value);
     let costoEmpaque = parseInt(document.getElementById('costoEmpaque').value);
-    let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque);
+    let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque,costoEmpaque);
 
     inventarioMateriaPrima.push(nuevaMateriaPrima);
     sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
     sessionStorage.setItem("nuevaSession", "no");
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
-    empaque.innerHTML = "";
-    costoEmpaque.innerHTML = "";
+    document.getElementById('nombreMateriaPrima').value = "";
+    document.getElementById('cantidadEmpaque').value = "";
+    document.getElementById('costoEmpaque').value = "";
     Swal.fire({
         icon: 'success',
         title: 'Ingreso Exitoso',
         text: 'Ingreso correctamente materia prima',
+    });
+}
+const editarMateriaPrima = (nombreMateriaPrima) => {
+    let empaque = parseInt(document.getElementById('cantidadEmpaque').value);
+    let costoEmpaque = parseInt(document.getElementById('costoEmpaque').value);
+    let materiaPrimaEditada = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque,costoEmpaque);
+    let id = listadoMateriaPrima.indexOf(listadoMateriaPrima.find(valor => valor.materiaPrima === nombreMateriaPrima));
+
+    listadoMateriaPrima.splice(id,1,materiaPrimaEditada);
+
+    sessionStorage.setItem("materiaPrima", JSON.stringify(listadoMateriaPrima));
+    sessionStorage.setItem("nuevaSession", "no");
+    document.getElementById('nombreMateriaPrima').value = "";
+    document.getElementById('cantidadEmpaque').value = "";
+    document.getElementById('costoEmpaque').value = "";
+    Swal.fire({
+        icon: 'success',
+        title: 'Modificación Exitosa',
+        text: 'Se modifico correctamente la materia prima',
     });
 }
 
@@ -284,7 +349,7 @@ const agregarProducto = (nombreProducto, ingredientes) => {
     sessionStorage.setItem("productos", JSON.stringify(listadoProducto));
     // constructorTablas(sessionStorage.getItem("productos"), "productos", "producto");
     ocultarFormulario("formProducto");
-    nombreProducto.innerHTML = "";
+    // nombreProducto.innerHTML = "";
     // document.querySelectorAll('.tbIngredientes tr.ingredientes').forEach(elemento => elemento.remove());
     // Listado de precios        
     // listadoPrecios = sessionStorage.setItem("listadoPrecios", JSON.stringify(listadoPrecios));
@@ -308,6 +373,14 @@ const validarFormMateriaPrima = (e) => {
     nombreMateriaPrima.innerHTML = "";
     ocultarFormulario("formMateriaPrima");
 }
+const validarEditarFormMateriaPrima = (e) => {
+    e.preventDefault();
+    let nombreMateriaPrima = document.getElementById('nombreMateriaPrima').value;
+    editarMateriaPrima(nombreMateriaPrima)
+    document.getElementById('nombreMateriaPrima').value = "";
+    ocultarFormulario("editarFormMateriaPrima");
+    constructorTablas(listadoMateriaPrima, "tbMateriaPrima","materiaPrima");
+}
 
 const validarFormProducto = (e) => {
     e.preventDefault();
@@ -330,9 +403,9 @@ const validarFormProducto = (e) => {
 }
 const dataSession = () => {
     sessionStorage.setItem("nuevaSession", "no");
-    sessionStorage.setItem("materiaPrima", localStorage.getItem("materiaPrima"));
-    sessionStorage.setItem("productos", localStorage.getItem("productos"));
-    sessionStorage.setItem("inventarioMp", localStorage.getItem("inventarioMp"));
+    sessionStorage.getItem("materiaPrima") || sessionStorage.setItem("materiaPrima", localStorage.getItem("materiaPrima"));
+    sessionStorage.getItem("productos") || sessionStorage.setItem("productos", localStorage.getItem("productos"));
+    sessionStorage.getItem("inventarioMp") || sessionStorage.setItem("inventarioMp", localStorage.getItem("inventarioMp"));
     productos = JSON.parse(sessionStorage.getItem("productos"));
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
     listadoMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));

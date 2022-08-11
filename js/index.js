@@ -174,6 +174,7 @@ const cargarDataIndex = async () => {
     calculoVentasAnuales();
     graficaMensual();
     graficaAnual();
+    calculoPrecio(listadoMateriaPrima, listadoProducto);
 }
 
 cargarDataIndex();

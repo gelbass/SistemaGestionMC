@@ -99,6 +99,37 @@
         </div>
 
         <!-- FORMULARIOS MODALES - MATERIALES -->
+
+        <div class="container__formulario" id="editarFormMateriaPrima">
+            <h2 class="d-flex justify-content-center">Ingreso de materia prima</h2>
+            <form class="formulario" action="">
+                <div class="form-group">
+                    <label for="nombreMateriaPrima">Materia Prima</label>
+                    <input id="nombreMateriaPrima" class="form-control formulario__items" type="text"
+                        name="materiaPrima" placeholder="Ingrese nombre de la materia prima" required>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="cantidadEmpaque">Cantidad del empaque</label>
+                            <input id="cantidadEmpaque" class="form-control formulario__items" type="number"
+                                name="cantidadEmpaque" placeholder="Cantidad del empaque" required>
+                        </div>
+                        <div class="col">
+                            <label for="costoEmpaque">Costo de la materia prima</label>
+                            <input id="costoEmpaque" class="form-control formulario__items" type="number" name="costo"
+                                placeholder="Costo de la materia prima" required>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="from-group d-flex justify-content-around">
+                    <input class="btn" type="button" value="cerrar" id="cerrarFormularioMp">
+                    <input class="btn" type="submit" value="Modificar">
+                </div>
+            </form>
+        </div>
+
         <div class="container__formulario" id="formMateriaPrima">
             <h2 class="d-flex justify-content-center">Ingreso de materia prima</h2>
             <form class="formulario" action="">
@@ -128,6 +159,7 @@
                 </div>
             </form>
         </div>
+
         <!-- FORMULARIOS MODALES - PRODUCTOS -->
         <div class="container__formulario container__formulario--productos" id="formProducto">
             <h2 class="d-flex justify-content-center">Ingreso de Productos</h2>
@@ -161,10 +193,10 @@
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
     <script src="../js/script.js"></script>
     <script src="../js/materiaPrima.js"></script>
