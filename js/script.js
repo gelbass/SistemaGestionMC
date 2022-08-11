@@ -161,8 +161,8 @@ const constructorTablas = (array, contenedor, tipo) => {
                 rowM.appendChild(colM4);
                 tbodyDf.appendChild(rowM);
                 
-                let editarMateriaPrima = document.querySelector(`.btn_${i}`);
-                editarMateriaPrima.addEventListener("click", () => mostrarFormularioEditable("editarFormMateriaPrima", elemento.materiaPrima,elemento.cantidadEmpaque, elemento.costoEmpaque));
+                let editarMateriaPrimaBtn = document.querySelector(`.btn_${i}`);
+                editarMateriaPrimaBtn.addEventListener("click", () => mostrarFormularioEditable("editarFormMateriaPrima", elemento.materiaPrima,elemento.cantidadEmpaque, elemento.costoEmpaque));
                 i++;
             }
 
