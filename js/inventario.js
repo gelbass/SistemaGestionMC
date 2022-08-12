@@ -3,6 +3,6 @@ dataSession();
 constructorTablas(inventarioMateriaPrima, "tbMateriales");
 // ----------------
 
-menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formMateriaPrima"));
-cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formMateriaPrima"));
-formularioMateriaPrima.addEventListener("submit", validarFormMateriaPrima);
+menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formInventario"));
+cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formInventario"));
+formularioInventario.addEventListener("submit", validarFormInventarioMateriaPrima);

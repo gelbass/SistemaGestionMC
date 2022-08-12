@@ -65,7 +65,7 @@
     <main id="main">
         <div class="menuSecundario shadow-sm">
             <div class="menuSecundario__items" id="addMateriaPrima">
-                Agregar Materia Prima
+                Agregar Inventario
             </div>
             <hr>
         </div>
@@ -96,26 +96,21 @@
             </div>
         </div>
 
-        <!-- FORMULARIOS MODALES - MATERIALES -->
-        <div class="container__formulario" id="formMateriaPrima">
-            <h2 class="d-flex justify-content-center">Ingreso de materia prima</h2>
+        <!-- FORMULARIOS MODALES - INVENTARIO -->
+        <div class="container__formulario" id="formInventario">
+            <h2 class="d-flex justify-content-center">Ingreso de inventario</h2>
             <form class="formulario" action="">
                 <div class="form-group">
                     <label for="nombreMateriaPrima">Materia Prima</label>
-                    <input id="nombreMateriaPrima" class="form-control formulario__items" type="text"
+                    <input id="nombreMateriaPrimaInventario" class="form-control formulario__items" type="text"
                         name="materiaPrima" placeholder="Ingrese nombre de la materia prima" required>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
                             <label for="cantidadEmpaque">Cantidad del empaque</label>
-                            <input id="cantidadEmpaque" class="form-control formulario__items" type="number"
+                            <input id="cantidadEmpaqueInventario" class="form-control formulario__items" type="number"
                                 name="cantidadEmpaque" placeholder="Cantidad del empaque" required>
-                        </div>
-                        <div class="col">
-                            <label for="costoEmpaque">Costo de la materia prima</label>
-                            <input id="costoEmpaque" class="form-control formulario__items" type="number" name="costo"
-                                placeholder="Costo de la materia prima" required>
                         </div>
                     </div>
                 </div>

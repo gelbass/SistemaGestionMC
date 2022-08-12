@@ -1,7 +1,5 @@
-
 dataSession();
 constructorTablas(listadoMateriaPrima, "tbMateriaPrima","materiaPrima");
-
 
 menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formMateriaPrima"));
 cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formMateriaPrima"));

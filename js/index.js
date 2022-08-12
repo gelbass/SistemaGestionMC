@@ -183,11 +183,15 @@ cargarDataIndex();
 menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formMateriaPrima"));
 cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formMateriaPrima"));
 
+menuSecundarioInventario.addEventListener("click", () => mostrarFormulario("formInventario"));
+cerrarFormularioInventario.addEventListener("click", () => ocultarFormulario("formInventario"));
+
 menuSecundarioProducto.addEventListener("click", () => mostrarFormulario("formProducto"));
 cerrarFormularioProducto.addEventListener("click", () => ocultarFormulario("formProducto"));
 
 formularioMateriaPrima.addEventListener("submit", validarFormMateriaPrima);
 formularioProducto.addEventListener("submit", validarFormProducto);
+formularioInventario.addEventListener("submit", validarFormInventarioMateriaPrima);
 
 addIngrediente.addEventListener("click", selectIngredientes);
 

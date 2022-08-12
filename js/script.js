@@ -11,16 +11,18 @@ let listadoMateriaPrima;
 // BOTONES PARA EVENTOS
 let menuSecundarioMateriaPrima = document.getElementById('addMateriaPrima');
 let menuSecundarioProducto = document.getElementById('addProducto');
+let menuSecundarioInventario = document.getElementById('addInventario');
 
 let cerrarFormularioMateriaPrima = document.getElementById('cerrarFormularioMp');
+let cerrarFormularioInventario = document.getElementById('cerrarFormularioInv');
 let cerrarFormularioProducto = document.getElementById('cerrarFormularioProducto');
 
 let formularioMateriaPrima = document.getElementById('formMateriaPrima');
+let formularioInventario = document.getElementById('formInventario');
 let editarFormularioMateriaPrima = document.getElementById('editarFormMateriaPrima');
 let formularioProducto = document.getElementById('formProducto');
 
 let addIngrediente = document.getElementById('addIngrediente');
-
 
 // -------------------------------
 
@@ -31,7 +33,12 @@ class MateriaPrima {
         this.cantidadEmpaque = cantidadEmpaque;
         this.costoEmpaque = costoEmpaque;
     }
-
+}
+class Inventario {
+    constructor(materiaPrima, cantidad) {
+        this.materiaPrima = materiaPrima;
+        this.cantidad = cantidad;
+    }
 }
 class Producto {
     constructor(nomProducto, ingredientesProducto) {
@@ -51,21 +58,7 @@ const materiaPrimaExiste = (array, elemento, opcion) => {
     }
 }
 
-const crearBotonAccion = () => {
-    let tbody = document.getElementById("tbMateriaPrima");
-    let row = tbody.getElementsByTagName('tr');
-    let col = tbody.getElementsByClassName('accion')
-    let boton = document.createElement("input");
-    console.log(col);
-    boton.type = "button";
-    boton.className = "btn";
-    col.appendChild(boton);
-    // row.appendChild(boton);
-    // tbody.appendChild(boton);
-}
-
 const mostrarFormularioEditable = (componente, materiaPrima, cantidad, costo) => {
-    console.log("entro");
     let formulario = document.getElementById(componente);
     formulario.style.display = "block";
     let inputMateriaPrima = document.getElementById('nombreMateriaPrima');
@@ -83,7 +76,6 @@ const constructorTablas = (array, contenedor, tipo) => {
             for (const elemento of array) {
                 let producto = document.createElement('h3');
                 producto.innerHTML = elemento.nomProducto;
-                console.log(elemento.nomProducto);
                 document.getElementById(contenedor).append(producto);
 
                 let tableP = document.createElement('table');
@@ -120,6 +112,7 @@ const constructorTablas = (array, contenedor, tipo) => {
             }
             break;
         case 'precios':
+            document.querySelectorAll(`#${contenedor} tr`).forEach(elemento => elemento.remove());
             for (const elemento of array) {
                 let tbody = document.getElementById(contenedor);
                 let row = document.createElement('tr');
@@ -146,23 +139,22 @@ const constructorTablas = (array, contenedor, tipo) => {
                 let colM3 = document.createElement('td');
                 colM3.innerHTML = elemento.costoEmpaque;
                 let colM4 = document.createElement('td');
-                
+
                 colM4.className = "accion";
                 let boton = document.createElement("input");
-                // console.log(col);
                 boton.type = "button";
                 boton.className = `btn btn__sm btn_${i}`;
                 boton.value = 'EDITAR';
-                
+
                 colM4.appendChild(boton);
                 rowM.appendChild(colM1);
                 rowM.appendChild(colM2);
                 rowM.appendChild(colM3);
                 rowM.appendChild(colM4);
                 tbodyDf.appendChild(rowM);
-                
+
                 let editarMateriaPrimaBtn = document.querySelector(`.btn_${i}`);
-                editarMateriaPrimaBtn.addEventListener("click", () => mostrarFormularioEditable("editarFormMateriaPrima", elemento.materiaPrima,elemento.cantidadEmpaque, elemento.costoEmpaque));
+                editarMateriaPrimaBtn.addEventListener("click", () => mostrarFormularioEditable("editarFormMateriaPrima", elemento.materiaPrima, elemento.cantidadEmpaque, elemento.costoEmpaque));
                 i++;
             }
 
@@ -221,10 +213,7 @@ const nuevoInicioSession = () => {
 }
 
 const calculoPrecio = (listadoMateriaPrima, listadoProducto) => {
-    console.log("entro");
-    console.log(listadoMateriaPrima);
-    listadoPrecios.splice(0,listadoPrecios.length);
-    console.log(listadoPrecios);
+    listadoPrecios.splice(0, listadoPrecios.length);
     for (const producto of listadoProducto) {
         let costoIngrediente = 0;
         const MANODEOBRA = 300;
@@ -232,7 +221,6 @@ const calculoPrecio = (listadoMateriaPrima, listadoProducto) => {
             let ingredienteCalulo = ingredientes.ingrediente;
             const id = listadoMateriaPrima.find(valor => valor.materiaPrima === ingredienteCalulo.materiaPrima);
             costoIngrediente += (ingredientes.cantidad / id.cantidadEmpaque) * id.costoEmpaque;
-            console.log(ingredientes.cantidad+" "+id.cantidadEmpaque +" "+ id.costoEmpaque);
         }
         let venta = costoIngrediente + MANODEOBRA
         listadoPrecios.push({
@@ -273,7 +261,6 @@ const selectIngredientes = () => {
 
     let select = document.createElement("select");
     select.className = "form-select selectIngredientes";
-    console.log(inventarioMateriaPrima);
     for (const item of inventarioMateriaPrima) {
         let opcion = document.createElement('option');
         opcion.setAttribute("value", item.materiaPrima);
@@ -294,30 +281,59 @@ const selectIngredientes = () => {
 }
 
 const agregarMateriaPrima = (nombreMateriaPrima) => {
-    let empaque = parseInt(document.getElementById('cantidadEmpaque').value);
-    let costoEmpaque = parseInt(document.getElementById('costoEmpaque').value);
-    let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque,costoEmpaque);
+    let empaque = parseInt(document.getElementById('cantidadEmpaqueNuevo').value);
+    let costoEmpaque = parseInt(document.getElementById('costoEmpaqueNuevo').value);
+    let nuevaMateriaPrima = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque, costoEmpaque);
+    listadoMateriaPrima.push(nuevaMateriaPrima);
 
-    inventarioMateriaPrima.push(nuevaMateriaPrima);
-    sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
+    sessionStorage.setItem("materiaPrima", JSON.stringify(listadoMateriaPrima));
     sessionStorage.setItem("nuevaSession", "no");
-    inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
-    document.getElementById('nombreMateriaPrima').value = "";
-    document.getElementById('cantidadEmpaque').value = "";
-    document.getElementById('costoEmpaque').value = "";
+    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
+
+    document.getElementById('nombreMateriaPrimaNuevo').value = "";
+    document.getElementById('cantidadEmpaqueNuevo').value = "";
+    document.getElementById('costoEmpaqueNuevo').value = "";
     Swal.fire({
         icon: 'success',
         title: 'Ingreso Exitoso',
         text: 'Ingreso correctamente materia prima',
     });
+    null && constructorTablas(listadoMateriaPrima, "tbMateriaPrima", "materiaPrima");
+}
+
+const agregarInventarioMateriaPrima = (nombreMateriaPrima) => {
+    let empaque = parseInt(document.getElementById('cantidadEmpaqueInventario').value);
+
+    inventarioMateriaPrima.find(valor => valor.materiaPrima === nombreMateriaPrima.toUpperCase()) || inventarioMateriaPrima.push(new Inventario(nombreMateriaPrima.toUpperCase(), 0))
+    const materiaPrima = inventarioMateriaPrima.find(valor => valor.materiaPrima === nombreMateriaPrima.toUpperCase());
+
+    let cantidadNueva = empaque + materiaPrima.cantidad;
+    let ingresoInventrioMateriaPrima = new Inventario(nombreMateriaPrima.toUpperCase(), cantidadNueva);
+    let id = inventarioMateriaPrima.indexOf(materiaPrima);
+    
+    inventarioMateriaPrima.splice(id, 1, ingresoInventrioMateriaPrima);
+
+    sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
+    sessionStorage.setItem("nuevaSession", "no");
+    inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
+    document.getElementById('nombreMateriaPrimaInventario').value = "";
+    document.getElementById('cantidadEmpaqueInventario').value = "";
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Ingreso Exitoso',
+        text: 'Ingreso correctamente materia prima',
+    });
+
+    null && constructorTablas(inventarioMateriaPrima, "tbMateriales");
 }
 const editarMateriaPrima = (nombreMateriaPrima) => {
     let empaque = parseInt(document.getElementById('cantidadEmpaque').value);
     let costoEmpaque = parseInt(document.getElementById('costoEmpaque').value);
-    let materiaPrimaEditada = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque,costoEmpaque);
+    let materiaPrimaEditada = new MateriaPrima(nombreMateriaPrima.toUpperCase(), empaque, costoEmpaque);
     let id = listadoMateriaPrima.indexOf(listadoMateriaPrima.find(valor => valor.materiaPrima === nombreMateriaPrima));
 
-    listadoMateriaPrima.splice(id,1,materiaPrimaEditada);
+    listadoMateriaPrima.splice(id, 1, materiaPrimaEditada);
 
     sessionStorage.setItem("materiaPrima", JSON.stringify(listadoMateriaPrima));
     sessionStorage.setItem("nuevaSession", "no");
@@ -347,24 +363,30 @@ const agregarProducto = (nombreProducto, ingredientes) => {
     listadoProducto.push(producto);
     sessionStorage.setItem("nuevaSession", "no");
     sessionStorage.setItem("productos", JSON.stringify(listadoProducto));
-    // constructorTablas(sessionStorage.getItem("productos"), "productos", "producto");
     ocultarFormulario("formProducto");
-    // nombreProducto.innerHTML = "";
-    // document.querySelectorAll('.tbIngredientes tr.ingredientes').forEach(elemento => elemento.remove());
-    // Listado de precios        
-    // listadoPrecios = sessionStorage.setItem("listadoPrecios", JSON.stringify(listadoPrecios));
-    // constructorTablas(listadoPrecios, "tbListaPrecios", "precios");
     Swal.fire({
         icon: 'success',
         title: 'Ingreso Exitoso',
         text: 'Ingreso correctamente el producto',
     });
+    calculoPrecio(listadoMateriaPrima,listadoProducto);
+}
 
+const validarFormInventarioMateriaPrima = (e) => {
+    e.preventDefault();
+    let nombreMateriaPrima = document.getElementById('nombreMateriaPrimaInventario').value;
+    materiaPrimaExiste(listadoMateriaPrima, nombreMateriaPrima.toUpperCase(), true) == true ? agregarInventarioMateriaPrima(nombreMateriaPrima) : Swal.fire({
+        icon: 'error',
+        title: 'Error. Ingreso de materia prima al inventario',
+        text: 'Debe ingresar previamente la materia prima\n En el modulo de Materia Prima',
+    });
+    document.getElementById('nombreMateriaPrimaInventario').innerHTML = "";
+    ocultarFormulario("formInventario");
 }
 
 const validarFormMateriaPrima = (e) => {
     e.preventDefault();
-    let nombreMateriaPrima = document.getElementById('nombreMateriaPrima').value;
+    let nombreMateriaPrima = document.getElementById('nombreMateriaPrimaNuevo').value;
     materiaPrimaExiste(listadoMateriaPrima, nombreMateriaPrima.toUpperCase(), true) == false ? agregarMateriaPrima(nombreMateriaPrima) : Swal.fire({
         icon: 'error',
         title: 'Error. Ingreso de materia prima',
@@ -373,13 +395,14 @@ const validarFormMateriaPrima = (e) => {
     nombreMateriaPrima.innerHTML = "";
     ocultarFormulario("formMateriaPrima");
 }
+
 const validarEditarFormMateriaPrima = (e) => {
     e.preventDefault();
     let nombreMateriaPrima = document.getElementById('nombreMateriaPrima').value;
     editarMateriaPrima(nombreMateriaPrima)
     document.getElementById('nombreMateriaPrima').value = "";
     ocultarFormulario("editarFormMateriaPrima");
-    constructorTablas(listadoMateriaPrima, "tbMateriaPrima","materiaPrima");
+    constructorTablas(listadoMateriaPrima, "tbMateriaPrima", "materiaPrima");
 }
 
 const validarFormProducto = (e) => {
@@ -401,6 +424,7 @@ const validarFormProducto = (e) => {
         text: 'No puede seleccionar varias veces la misma materia prima.',
     });
 }
+
 const dataSession = () => {
     sessionStorage.setItem("nuevaSession", "no");
     sessionStorage.getItem("materiaPrima") || sessionStorage.setItem("materiaPrima", localStorage.getItem("materiaPrima"));
