@@ -492,6 +492,6 @@ const validarFormVenta = (e) => {
     let cantidad = parseInt(document.getElementById("cantidadVenta").value);
     agregarVentas(producto, cantidad);
     document.getElementById("selectProductos").value= "-";
-    document.getElementById("cantidadVenta").innerText ="";
+    document.getElementById("cantidadVenta").innerText ="0";
 }
 // -------------------------------
