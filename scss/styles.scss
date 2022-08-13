@@ -1,7 +1,8 @@
 * {
     font-family: 'Montserrat', sans-serif;
 }
-hr{
+
+hr {
     height: 2px;
     color: #e9e7e7;
 }
@@ -46,7 +47,7 @@ main {
     }
 }
 
-.container__formulario{
+.container__formulario {
     display: none;
     background-color: white;
     position: fixed;
@@ -59,26 +60,36 @@ main {
     transition: 0.2s;
 }
 
-.formulario{
+.formulario {
     padding: 20px;
 }
-.form-group{
+
+.form-group {
     padding: 14px 0px;
 }
 
-.tbIngredientes{
+.tbIngredientes {
     margin-top: 15px;
     width: auto;
     height: 170px;
     overflow-y: auto;
 }
-.btn{
+
+.btn {
     background-color: #8ae9b5;
     width: 200px;
     padding: 10px;
     margin: 0px 10px;
     text-transform: uppercase;
 }
-.btn__sm{
+
+.btn__sm {
     width: 90px;
+}
+
+.container__contadorVentas {
+    height: 140px;
+    margin: 38px;
+    text-align: center;
+
 }

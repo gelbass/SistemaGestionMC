@@ -19,6 +19,7 @@ let cerrarFormularioProducto = document.getElementById('cerrarFormularioProducto
 
 let formularioMateriaPrima = document.getElementById('formMateriaPrima');
 let formularioInventario = document.getElementById('formInventario');
+let formularioVenta = document.getElementById('formVenta');
 let editarFormularioMateriaPrima = document.getElementById('editarFormMateriaPrima');
 let formularioProducto = document.getElementById('formProducto');
 
@@ -238,18 +239,45 @@ const cargarDatos = async () => {
     sessionStorage.getItem("nuevaSession") || sessionStorage.setItem("nuevaSession", "si");
     sessionStorage.getItem("nuevaSession") == 'si' ? nuevoInicioSession() : sessionExistente();
 }
-
+const dataSession = () => {
+    sessionStorage.setItem("nuevaSession", "no");
+    sessionStorage.getItem("materiaPrima") || sessionStorage.setItem("materiaPrima", localStorage.getItem("materiaPrima"));
+    sessionStorage.getItem("productos") || sessionStorage.setItem("productos", localStorage.getItem("productos"));
+    sessionStorage.getItem("inventarioMp") || sessionStorage.setItem("inventarioMp", localStorage.getItem("inventarioMp"));
+    listadoProducto = JSON.parse(sessionStorage.getItem("productos"));
+    inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
+    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
+}
 // --------------------
 // CONTROL FORMULARIOS
 const mostrarFormulario = (componente) => {
     let formulario = document.getElementById(componente);
     formulario.style.display = "block";
 }
-
-
 const ocultarFormulario = (componente) => {
     let formulario = document.getElementById(componente);
     formulario.style.display = "none";
+}
+const cargarSelect = (listado, tipo) => {
+    let select = document.getElementById(`select${tipo}`);
+    switch (tipo) {
+        case 'Productos':
+            for (const item of listado) {
+                let opcion = document.createElement('option');
+                opcion.setAttribute("value", item.nomProducto);
+                opcion.text = item.nomProducto;
+                select.append(opcion);
+            }
+            break;
+        case 'Materiales':
+            for (const item of listado) {
+                let opcion = document.createElement('option');
+                opcion.setAttribute("value", item.materiaPrima);
+                opcion.text = item.materiaPrima;
+                select.append(opcion);
+            }
+            break;
+    }
 }
 
 const selectIngredientes = () => {
@@ -279,7 +307,8 @@ const selectIngredientes = () => {
 
     tbody.appendChild(row);
 }
-
+// --------------------
+// AGREAR Y EDITAR DATOS
 const agregarMateriaPrima = (nombreMateriaPrima) => {
     let empaque = parseInt(document.getElementById('cantidadEmpaqueNuevo').value);
     let costoEmpaque = parseInt(document.getElementById('costoEmpaqueNuevo').value);
@@ -300,7 +329,6 @@ const agregarMateriaPrima = (nombreMateriaPrima) => {
     });
     null && constructorTablas(listadoMateriaPrima, "tbMateriaPrima", "materiaPrima");
 }
-
 const agregarInventarioMateriaPrima = (nombreMateriaPrima) => {
     let empaque = parseInt(document.getElementById('cantidadEmpaqueInventario').value);
 
@@ -310,7 +338,7 @@ const agregarInventarioMateriaPrima = (nombreMateriaPrima) => {
     let cantidadNueva = empaque + materiaPrima.cantidad;
     let ingresoInventrioMateriaPrima = new Inventario(nombreMateriaPrima.toUpperCase(), cantidadNueva);
     let id = inventarioMateriaPrima.indexOf(materiaPrima);
-    
+
     inventarioMateriaPrima.splice(id, 1, ingresoInventrioMateriaPrima);
 
     sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
@@ -346,7 +374,6 @@ const editarMateriaPrima = (nombreMateriaPrima) => {
         text: 'Se modifico correctamente la materia prima',
     });
 }
-
 const agregarIngredientesProducto = (ingredientes, cantidad, seleccion) => {
     inventarioMateriaPrima.find(elemento => {
         if (elemento.materiaPrima === seleccion.value) {
@@ -357,7 +384,6 @@ const agregarIngredientesProducto = (ingredientes, cantidad, seleccion) => {
         }
     });
 }
-
 const agregarProducto = (nombreProducto, ingredientes) => {
     let producto = new Producto(nombreProducto.value.toUpperCase(), ingredientes);
     listadoProducto.push(producto);
@@ -369,9 +395,48 @@ const agregarProducto = (nombreProducto, ingredientes) => {
         title: 'Ingreso Exitoso',
         text: 'Ingreso correctamente el producto',
     });
-    calculoPrecio(listadoMateriaPrima,listadoProducto);
+    calculoPrecio(listadoMateriaPrima, listadoProducto);
+}
+const agregarVentas = (nombreProducto, cantidad) => {
+    let error= false;
+    const producto = listadoProducto.find(valor => valor.nomProducto === nombreProducto);
+    const materiales = producto.ingredientesProducto;
+    console.log(cantidad);
+    console.log(materiales);
+    materiales.forEach(elemento => {
+        let material = elemento.ingrediente;
+        let cantidadDescontar = elemento.cantidad * cantidad;
+        let id = inventarioMateriaPrima.indexOf(inventarioMateriaPrima.find(valor => valor.materiaPrima === material.materiaPrima));
+        let ingrediente = inventarioMateriaPrima.find(valor => valor.materiaPrima === material.materiaPrima);
+        console.log(id);
+        console.log(ingrediente);
+        console.log(ingrediente.cantidad - cantidadDescontar);
+        let cantidadNueva = ingrediente.cantidad - cantidadDescontar;
+        cantidadNueva >= 0 ? inventarioMateriaPrima.splice(id, 1, {
+            materiaPrima: material.materiaPrima,
+            cantidad: cantidadNueva
+        }) : error = true;
+    });
+    if (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error al ingresar la venta',
+            text: 'Materia prima sin stock.',
+        });
+    } else {
+        console.log(inventarioMateriaPrima);
+        sessionStorage.setItem("inventarioMp", JSON.stringify(inventarioMateriaPrima));
+        sessionStorage.setItem("nuevaSession", "no");
+        Swal.fire({
+            icon: 'success',
+            title: 'Ingreso de venta',
+            text: 'Venta ingresada exitosamente',
+        });
+    }
 }
 
+// --------------------
+// VALIDAR FORMULARIOS
 const validarFormInventarioMateriaPrima = (e) => {
     e.preventDefault();
     let nombreMateriaPrima = document.getElementById('nombreMateriaPrimaInventario').value;
@@ -383,7 +448,6 @@ const validarFormInventarioMateriaPrima = (e) => {
     document.getElementById('nombreMateriaPrimaInventario').innerHTML = "";
     ocultarFormulario("formInventario");
 }
-
 const validarFormMateriaPrima = (e) => {
     e.preventDefault();
     let nombreMateriaPrima = document.getElementById('nombreMateriaPrimaNuevo').value;
@@ -395,7 +459,6 @@ const validarFormMateriaPrima = (e) => {
     nombreMateriaPrima.innerHTML = "";
     ocultarFormulario("formMateriaPrima");
 }
-
 const validarEditarFormMateriaPrima = (e) => {
     e.preventDefault();
     let nombreMateriaPrima = document.getElementById('nombreMateriaPrima').value;
@@ -404,7 +467,6 @@ const validarEditarFormMateriaPrima = (e) => {
     ocultarFormulario("editarFormMateriaPrima");
     constructorTablas(listadoMateriaPrima, "tbMateriaPrima", "materiaPrima");
 }
-
 const validarFormProducto = (e) => {
     e.preventDefault();
     const ingredientes = [];
@@ -424,14 +486,12 @@ const validarFormProducto = (e) => {
         text: 'No puede seleccionar varias veces la misma materia prima.',
     });
 }
-
-const dataSession = () => {
-    sessionStorage.setItem("nuevaSession", "no");
-    sessionStorage.getItem("materiaPrima") || sessionStorage.setItem("materiaPrima", localStorage.getItem("materiaPrima"));
-    sessionStorage.getItem("productos") || sessionStorage.setItem("productos", localStorage.getItem("productos"));
-    sessionStorage.getItem("inventarioMp") || sessionStorage.setItem("inventarioMp", localStorage.getItem("inventarioMp"));
-    productos = JSON.parse(sessionStorage.getItem("productos"));
-    inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
-    listadoMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
+const validarFormVenta = (e) => {
+    e.preventDefault();
+    let producto = document.getElementById("selectProductos").value;
+    let cantidad = parseInt(document.getElementById("cantidadVenta").value);
+    agregarVentas(producto, cantidad);
+    document.getElementById("selectProductos").value= "-";
+    document.getElementById("cantidadVenta").innerText ="";
 }
 // -------------------------------

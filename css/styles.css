@@ -85,4 +85,10 @@ main {
   width: 90px;
 }
 
+.container__contadorVentas {
+  height: 140px;
+  margin: 38px;
+  text-align: center;
+}
+
 /*# sourceMappingURL=styles.css.map */

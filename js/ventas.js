@@ -1,2 +1,4 @@
 dataSession();
-constructorTablas(listadoMateriaPrima, "tbMateriaPrima","materiaPrima");
+cargarSelect(listadoProducto,"Productos");
+formularioVenta.addEventListener("submit", validarFormVenta);
+// constructorTablas(listadoMateriaPrima, "tbMateriaPrima","materiaPrima");

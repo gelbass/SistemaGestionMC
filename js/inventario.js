@@ -1,5 +1,6 @@
 // LLAMADA FUNCIONES
 dataSession();
+cargarSelect(listadoProducto,"Producto");
 constructorTablas(inventarioMateriaPrima, "tbMateriales");
 // ----------------
 

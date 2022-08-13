@@ -1,6 +1,6 @@
 // LLAMADA FUNCIONES 
 dataSession();
-constructorTablas(productos, "productos","producto");
+constructorTablas(listadoProducto, "productos","producto");
 // ---------------------
 
 // EVENTOS

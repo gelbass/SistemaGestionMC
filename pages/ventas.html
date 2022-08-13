@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                            <a class="nav-link" aria-current="page" href="../index.html">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="inventario.html">
@@ -78,15 +78,50 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item" aria-current="page"><a href="../index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Productos</li>
+                        <li class="breadcrumb-item active" aria-current="page">Ventas</li>
                     </ol>
                 </nav>
             </div>
 
-            <!-- PRODUCTOS -->
-            <div class="container p-4 gx-2 rounded shadow-sm bg-light">
-                <h2>Productos</h2>
-                <div class="container" id="productos"></div>
+            <!-- VENTAS -->
+            <div class="container ">
+                <div class="row">
+                    <div class="col">
+                        <div class="container p-4 gx-2 rounded shadow-sm bg-light" id="formVenta">
+                            <h2 class="d-flex justify-content-center">Ventas</h2>
+                            <form class="formulario" action="">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="selectProductos">Productos</label>
+                                            <select class="form-select" name="selectProductos" id="selectProductos" >
+                                                <option value="-">Seleccione Producto</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="cantidadVenta">Cantidad</label>
+                                            <input id="cantidadVenta" class="form-control formulario__items"
+                                                type="number" name="cantidadVenta" placeholder="Cantidad"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="from-group d-flex justify-content-around">
+                                    <input class="btn" type="submit" value="guardar">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="container p-4 gx-2 rounded shadow-sm bg-light">
+                            <h2 class="d-flex justify-content-center">Ventas diarias</h2>
+                            <div class="container__contadorVentas">
+                                <h4 id="contadorVentas">2</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <br>
         </div>
@@ -153,13 +188,13 @@
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
     <script src="../js/script.js"></script>
-    <script src="../js/productos.js"></script>
+    <script src="../js/ventas.js"></script>
 </body>
 
 </html>
