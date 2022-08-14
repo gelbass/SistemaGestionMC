@@ -1,5 +1,5 @@
-// Seteo inicial de variables
 
+// Seteo inicial de variables
 let listadoProducto;
 const listadoPrecios = [];
 let productos;
@@ -212,6 +212,7 @@ const nuevoInicioSession = () => {
     inventarioMateriaPrima = JSON.parse(localStorage.getItem("inventarioMp"));
     listadoProducto = JSON.parse(localStorage.getItem("productos"));
     listaAnualVentas = JSON.parse(localStorage.getItem("historicoVentas"));
+    document.getElementById("usuarioLogeado").textContent = sessionStorage.getItem("usuario");
 }
 
 const cargarDatos = async () => {
@@ -439,7 +440,6 @@ const agregarProducto = (nombreProducto, ingredientes) => {
         });
         console.log(error);
     }
-
 }
 
 // --------------------
@@ -494,6 +494,7 @@ const validarFormProducto = (e) => {
     });
 }
 // -------------------------------
+
 const eventos = () => {
     menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formMateriaPrima"));
     cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formMateriaPrima"));

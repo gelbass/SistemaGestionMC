@@ -1,3 +1,8 @@
+let index = () =>{
+    window.location.href = "../index.html"
+};
+sessionStorage.getItem("usuario")==="" &&  index();
+
 dataSession();
 cargarSelect(listadoProducto, "Productos");
 

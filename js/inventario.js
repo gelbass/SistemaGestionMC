@@ -1,11 +1,12 @@
+let index = () =>{
+    window.location.href = "../index.html"
+};
+sessionStorage.getItem("usuario")==="" &&  index();
+
 // LLAMADA FUNCIONES
 dataSession();
 cargarSelect(listadoProducto,"Producto");
 constructorTablas(inventarioMateriaPrima, "tbMateriales");
 // ----------------
 
-// menuSecundarioMateriaPrima.addEventListener("click", () => mostrarFormulario("formInventario"));
-// cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("formInventario"));
-// formularioInventario.addEventListener("submit", validarFormInventarioMateriaPrima);
-// EVENTOS
 eventos();

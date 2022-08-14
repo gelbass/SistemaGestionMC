@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
     <title>SIMULADOR DE COSTOS MUNDO CUPCAKE</title>
 </head>
 
@@ -22,8 +22,8 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="../principal.html">
-                    <img src="../img/MC_logo1.png" alt="" class="d-inline-block align-text-center">
+                <a class="navbar-brand" href="#">
+                    <img src="./img/MC_logo1.png" alt="" class="d-inline-block align-text-center">
                     Mundo Cupcake
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -34,25 +34,25 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../principal.html">Home</a>
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="inventario.html">
+                            <a class="nav-link" href="./pages/inventario.html">
                                 Inventario
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="productos.html">
+                            <a class="nav-link" href="./pages/productos.html">
                                 Productos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="materiaPrima.html">
+                            <a class="nav-link" href="./pages/materiaPrima.html">
                                 Materia Prima
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ventas.html">
+                            <a class="nav-link" href="./pages/ventas.html">
                                 Ventas
                             </a>
                         </li>
@@ -60,9 +60,10 @@
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle usuario" href="#" id="usuarioLogeado" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
+                            <!-- <h6 id="usuarioLogeado"></h6> -->
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="usuarioLogeado">
-                            <li><a class="dropdown-item submit" href="../index.html">Salir </a></li>
+                            <li><a class="dropdown-item submit" href="./index.html">Salir </a></li>
                         </ul>
                     </div>
                 </div>
@@ -88,26 +89,35 @@
             <div class="container-fluid">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item" aria-current="page"><a href="../principal.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Materia Prima</li>
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
                     </ol>
                 </nav>
             </div>
-
-            <!-- MATERIA PRIMA -->
             <div class="container p-4 gx-2 rounded shadow-sm bg-light">
-                <h2>Materia Prima</h2>
+                <h2>Historico de ventas</h2>
+                <div class="row">
+                    <div class="col p-5 gx-2">
+                        <select class="form-select" name="meses" id="select_meses"></select>
+                        <canvas id="ventasMensual"></canvas>
+                    </div>
+                    <div class="col p-5 gx-2">
+                        <canvas id="ventasAnuales"></canvas>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- PRODUCTOS -->
+            <div class="container p-4 gx-2 rounded shadow-sm bg-light">
+                <h2>Listado de Precios</h2>
                 <div class="container">
-                    <table class="table" id="materiaPrima">
+                    <table class="table" id="listaPrecios">
                         <thead>
                             <tr>
-                                <th>Materia Prima</th>
-                                <th>Cant. Empaque</th>
-                                <th>Costo</th>
-                                <th>Acciones</th>
+                                <th>Producto</th>
+                                <th>Precio de Venta</th>
                             </tr>
                         </thead>
-                        <tbody id="tbMateriaPrima"></tbody>
+                        <tbody id="tbListaPrecios"></tbody>
                     </table>
                 </div>
             </div>
@@ -143,38 +153,8 @@
                 </div>
             </form>
         </div>
-        <!-- EDICION MATERIA PRIMA -->
-        <div class="container__formulario container__formulario--sm" id="editarFormMateriaPrima">
-            <h2 class="d-flex justify-content-center">Ingreso de materia prima</h2>
-            <form class="formulario" action="">
-                <div class="form-group">
-                    <label for="nombreMateriaPrima">Materia Prima</label>
-                    <input id="nombreMateriaPrima" class="form-control formulario__items" type="text"
-                        name="materiaPrima" placeholder="Ingrese nombre de la materia prima" required>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <label for="cantidadEmpaque">Cantidad del empaque</label>
-                            <input id="cantidadEmpaque" class="form-control formulario__items" type="number"
-                                name="cantidadEmpaque" placeholder="Cantidad del empaque" required>
-                        </div>
-                        <div class="col">
-                            <label for="costoEmpaque">Costo de la materia prima</label>
-                            <input id="costoEmpaque" class="form-control formulario__items" type="number" name="costo"
-                                placeholder="Costo de la materia prima" required>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="from-group d-flex justify-content-around">
-                    <input class="btn" type="button" value="cerrar" id="cerrarFormularioMp">
-                    <input class="btn" type="submit" value="Modificar">
-                </div>
-            </form>
-        </div>
         <!-- FORMULARIOS MODALES - INVENTARIO -->
-        <div class="container__formulario container__formulario--sm" id="formInventario">
+        <div class="container__formulario" id="formInventario">
             <h2 class="d-flex justify-content-center">Ingreso de inventario</h2>
             <form class="formulario" action="">
                 <div class="form-group">
@@ -227,10 +207,12 @@
                 </div>
             </form>
         </div>
-        <div class="none" id="tbListaPrecios"></div>
+
+        <div class="none" id="tbMateriaPrima"></div>
         <div class="none" id="tbMateriales"></div>
         <div class="none" id="productos"></div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
@@ -238,8 +220,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
-    <script src="../js/script.js"></script>
-    <script src="../js/materiaPrima.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>

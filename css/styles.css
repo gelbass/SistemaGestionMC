@@ -117,6 +117,16 @@ main {
   font-weight: bold;
 }
 
+.usuario {
+  border: #e9e7e7 solid 1px;
+  border-radius: 20px;
+  padding-right: 50px;
+  color: black !important;
+}
+.usuario:hover {
+  color: #f99698 !important;
+}
+
 .none {
   display: none;
 }

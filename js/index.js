@@ -1,3 +1,7 @@
+let index = () =>{
+    window.location.href = "./index.html"
+};
+sessionStorage.getItem("usuario")==="" &&  index();
 const meses = [{
     numeroMes: 1,
     mesTxt: "ENERO"
