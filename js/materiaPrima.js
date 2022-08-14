@@ -8,6 +8,6 @@ dataSession();
 constructorTablas(listadoMateriaPrima, "tbMateriaPrima","materiaPrima");
 // EVENTOS
 eventos();
-let cerrarFormularioEdicionMateriaPrima = document.getElementById('editarFormMateriaPrima');
+let cerrarFormularioEdicionMateriaPrima = document.getElementById('cerrarFormularioEditarMp');
 cerrarFormularioEdicionMateriaPrima.addEventListener("click", () => ocultarFormulario("editarFormMateriaPrima"));
 editarFormularioMateriaPrima.addEventListener("submit", validarEditarFormMateriaPrima);
