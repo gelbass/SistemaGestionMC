@@ -205,6 +205,7 @@ const sessionExistente = () => {
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
     listadoProducto = JSON.parse(sessionStorage.getItem("productos"));
     listaAnualVentas = JSON.parse(localStorage.getItem("historicoVentas"));
+    document.getElementById("usuarioLogeado").textContent = sessionStorage.getItem("usuario");
 }
 
 const nuevoInicioSession = () => {
@@ -229,6 +230,7 @@ const dataSession = () => {
     inventarioMateriaPrima = JSON.parse(sessionStorage.getItem("inventarioMp"));
     listadoMateriaPrima = JSON.parse(sessionStorage.getItem("materiaPrima"));
     listaAnualVentas = JSON.parse(localStorage.getItem("historicoVentas"));
+    document.getElementById("usuarioLogeado").textContent = sessionStorage.getItem("usuario");
 }
 // --------------------
 
