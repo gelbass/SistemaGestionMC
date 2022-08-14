@@ -6,5 +6,5 @@ constructorTablas(listadoMateriaPrima, "tbMateriaPrima","materiaPrima");
 // EVENTOS
 eventos();
 // cerrarFormularioMateriaPrima.addEventListener("click", () => ocultarFormulario("editarFormMateriaPrima"));
-// editarFormularioMateriaPrima.addEventListener("submit", validarEditarFormMateriaPrima);
+editarFormularioMateriaPrima.addEventListener("submit", validarEditarFormMateriaPrima);
 // formularioMateriaPrima.addEventListener("submit", validarFormMateriaPrima);
