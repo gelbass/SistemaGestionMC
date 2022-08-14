@@ -1,5 +1,6 @@
 [{
         "mes": "ENERO",
+        "mesNumero":1,
         "ventas": [{
                 "dia": 10,
                 "venta": 20
@@ -36,6 +37,7 @@
     },
     {
         "mes": "FEBRERO",
+        "mesNumero": 2,
         "ventas":[{
             "dia": 1,
             "venta": 50
@@ -43,6 +45,7 @@
     },
     {
         "mes": "MARZO",
+        "mesNumero":3,
         "ventas":[{
             "dia": 5,
             "venta": 20
@@ -50,12 +53,14 @@
     },
     {
         "mes": "ABRIL",
+        "mesNumero":4,
         "ventas":[{
             "dia": 6,
             "venta": 30
         }]
     },{
         "mes": "MAYO",
+        "mesNumero":5,
         "ventas":[{
             "dia": 30,
             "venta": 30
@@ -63,6 +68,7 @@
     },
     {
         "mes": "JUNIO",
+        "mesNumero":6,
         "ventas":[{
             "dia": 16,
             "venta": 63
@@ -70,6 +76,7 @@
     },
     {
         "mes": "JULIO",
+        "mesNumero":7,
         "ventas":[{
             "dia": 22,
             "venta": 40
@@ -77,37 +84,36 @@
     },
     {
         "mes": "AGOSTO",
+        "mesNumero":8,
         "ventas":[{
-            "dia": 14,
+            "dia": 10,
             "venta": 55
         }]
     },
     {
         "mes": "SEPTIEMBRE",
+        "mesNumero":9,
         "ventas":[{
-            "dia": 10,
-            "venta": 59
+            
         }]
     },
     {
         "mes": "OCTUBRE",
+        "mesNumero":10,
         "ventas":[{
-            "dia": 12,
-            "venta": 56
+            
         }]
     },
     {
         "mes": "NOVIEMBRE",
+        "mesNumero":11,
         "ventas":[{
-            "dia": 8,
-            "venta": 20
         }]
     },
     {
         "mes": "DICIEMBRE",
+        "mesNumero":12,
         "ventas":[{
-            "dia": 5,
-            "venta": 70
         }]
     }
 ]

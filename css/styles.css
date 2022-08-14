@@ -2,6 +2,13 @@
   font-family: "Montserrat", sans-serif;
 }
 
+a {
+  color: #020202;
+}
+a:hover {
+  color: #f99698;
+}
+
 hr {
   height: 2px;
   color: #e9e7e7;
@@ -25,6 +32,18 @@ main {
 .cuerpo {
   background-color: #e9e7e7;
   grid-area: cuerpo;
+}
+
+.loggin {
+  background-color: #e9e7e7;
+  height: 100vh;
+  padding: 10%;
+}
+.loggin .container {
+  background-color: #ffffff;
+  width: 500px;
+  border-radius: 25px;
+  padding: 30px;
 }
 
 .menuSecundario {
@@ -58,6 +77,10 @@ main {
   transition: 0.2s;
 }
 
+.container__formulario--sm {
+  margin: 10% 30%;
+}
+
 .formulario {
   padding: 20px;
 }
@@ -86,9 +109,16 @@ main {
 }
 
 .container__contadorVentas {
-  height: 140px;
-  margin: 38px;
   text-align: center;
+}
+
+.contadorVentasTxt {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.none {
+  display: none;
 }
 
 /*# sourceMappingURL=styles.css.map */

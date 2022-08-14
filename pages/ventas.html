@@ -68,6 +68,10 @@
                 Agregar Materia Prima
             </div>
             <hr>
+            <div class="menuSecundario__items" id="addInventario">
+                Agregar Inventario
+            </div>
+            <hr>
             <div class="menuSecundario__items" id="addProducto">
                 Agregar Producto
             </div>
@@ -117,7 +121,7 @@
                         <div class="container p-4 gx-2 rounded shadow-sm bg-light">
                             <h2 class="d-flex justify-content-center">Ventas diarias</h2>
                             <div class="container__contadorVentas">
-                                <h4 id="contadorVentas">2</h4>
+                                <h4 class="contadorVentasTxt" id="contadorVentas"></h4>
                             </div>
                         </div>
                     </div>
@@ -127,31 +131,56 @@
         </div>
 
         <!-- FORMULARIOS MODALES - MATERIALES -->
-        <div class="container__formulario" id="formMateriaPrima">
+        <div class="container__formulario container__formulario--sm" id="formMateriaPrima">
             <h2 class="d-flex justify-content-center">Ingreso de materia prima</h2>
             <form class="formulario" action="">
                 <div class="form-group">
                     <label for="nombreMateriaPrima">Materia Prima</label>
-                    <input id="nombreMateriaPrima" class="form-control formulario__items" type="text"
+                    <input id="nombreMateriaPrimaNuevo" class="form-control formulario__items" type="text"
                         name="materiaPrima" placeholder="Ingrese nombre de la materia prima" required>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
                             <label for="cantidadEmpaque">Cantidad del empaque</label>
-                            <input id="cantidadEmpaque" class="form-control formulario__items" type="number"
+                            <input id="cantidadEmpaqueNuevo" class="form-control formulario__items" type="number"
                                 name="cantidadEmpaque" placeholder="Cantidad del empaque" required>
                         </div>
                         <div class="col">
                             <label for="costoEmpaque">Costo de la materia prima</label>
-                            <input id="costoEmpaque" class="form-control formulario__items" type="number" name="costo"
-                                placeholder="Costo de la materia prima" required>
+                            <input id="costoEmpaqueNuevo" class="form-control formulario__items" type="number"
+                                name="costo" placeholder="Costo de la materia prima" required>
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="from-group d-flex justify-content-around">
                     <input class="btn" type="button" value="cerrar" id="cerrarFormularioMp">
+                    <input class="btn" type="submit" value="guardar">
+                </div>
+            </form>
+        </div>
+        <!-- FORMULARIOS MODALES - INVENTARIO -->
+        <div class="container__formulario container__formulario--sm" id="formInventario">
+            <h2 class="d-flex justify-content-center">Ingreso de inventario</h2>
+            <form class="formulario" action="">
+                <div class="form-group">
+                    <label for="nombreMateriaPrima">Materia Prima</label>
+                    <input id="nombreMateriaPrimaInventario" class="form-control formulario__items" type="text"
+                        name="materiaPrima" placeholder="Ingrese nombre de la materia prima" required>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="cantidadEmpaque">Cantidad del empaque</label>
+                            <input id="cantidadEmpaqueInventario" class="form-control formulario__items" type="number"
+                                name="cantidadEmpaque" placeholder="Cantidad del empaque" required>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="from-group d-flex justify-content-around">
+                    <input class="btn" type="button" value="cerrar" id="cerrarFormularioInv">
                     <input class="btn" type="submit" value="guardar">
                 </div>
             </form>
@@ -185,6 +214,10 @@
                 </div>
             </form>
         </div>
+        <div class="none" id="tbMateriaPrima"></div>
+        <div class="none" id="tbMateriales"></div>
+        <div class="none" id="tbListaPrecios"></div>
+        <div class="none" id="productos"></div>
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
